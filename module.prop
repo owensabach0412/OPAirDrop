@@ -1,0 +1,7 @@
+id=opairshare
+name=OPAirDrop
+version=1.0.31
+versionCode=10034
+author=TimelessU
+description=RMX5010 / Oplus sun 平台移植版（内核 6.6.89 已验证），需要开启 Google 服务使用
+updateJson=https://github.com/owensabach0412/OPAirDrop/releases/latest/download/update.json
