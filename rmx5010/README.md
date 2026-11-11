@@ -95,8 +95,8 @@ adb reboot
 
 ## 5. 已知缺口（安装模块前请先读）
 
-1. **ROM 没有 Quick Share / Mosey**：`com.google.android.mosey` 不存在。模块自带 `MoseyApp`（versionCode 60715，minSdk 36，targetSdk 37），计划通过 `REPLACE=/system/system_ext/priv-app/MoseyApp` 在重启后由系统扫描安装；**尚未验证**。
-2. **OShare 16.4.60 没有 `com.oplus.oshare.OShareServer`**：`bin/receive-session.sh:31` 硬编码 `am startservice -n com.coloros.oshare/com.oplus.oshare.OShareServer`，在 realme 上找不到该服务，**后台接收路径预计失败**。发送/分享面板是否可用取决于 LSPosed 桥接能否匹配 realme 的 OShare 版本。
+1. **Mosey 由用户手动安装（13 个 split）**：设备上的 `com.google.android.mosey` 与模块自带 MoseyApp 同为 versionCode 60715，`base.apk` 字节一致（`7ab2deae…`），但 realme 版是 13 个 split（ar/et/fr/iw/ja/kk/ru/uk，且 xxhdpi 哈希不同）。原版 `app-check.sh` 要求恰好 6 个 split，会导致 provider 起不来 —— 已在 r2 修复（见 §7）。
+2. **OShare：无需改模块**（2026-11-11 复核）。realme 的 OShare 16.4.60 的 manifest 里**声明了** `com.oplus.oshare.OShareServer`，并且 `am startservice -n com.coloros.oshare/com.oplus.oshare.OShareServer` 实测返回 `Starting service`、`dumpsys activity services` 能看到 ServiceRecord。模块 `receive-session.sh` 使用的组件与设备一致。LSPosed 桥接是 DexKit 语义匹配，待装模块后验证 hook 命中。
 3. **SDK 36 vs 上游验证的 37**：Mosey `minSdk=36` 可安装，但 `targetSdk=37` 在 SDK 36 上运行需要实机验证。
 4. **`wonder0` 接口未出现**：手动换入后 `wonder.ko` 加载成功，但没有创建 `wonder0`；可能需要完整模块流程（HAL 启动时序 / provider component 绑定）或后续会话触发。待装模块后复查。
 5. 真机测试期间未安装模块、未重启；所有驱动换入均已回滚，设备保持原厂状态。
@@ -114,3 +114,29 @@ rmx5010/
 ├── scripts/                  真机取证、dry-run、驱动换入测试脚本
 └── logs/                     脱敏后的真机日志（probe / insmod / driver-swap）
 ```
+
+
+---
+
+## 7. r2 变更（2026-11-11）：Mosey 分包自适应
+
+**现象**：用户自行安装了 Mosey（Quick Share extension），`pm path` 返回 13 个 split；模块的 `app-check.sh` 要求 active split 数量等于清单行数（6），并逐个比对哈希，于是报 `Active APK split count differs` / `Active APK differs`，provider 无法激活。
+
+**实测对比**：
+
+| 文件 | 模块清单 | 设备实际 | 结果 |
+| --- | --- | --- | --- |
+| `base.apk` | `7ab2deae…` | `7ab2deae…` | 一致（同一构建） |
+| `split_config.arm64_v8a.apk` | `3f7c689c…` | `3f7c689c…` | 一致 |
+| `split_config.en.apk` / `es.apk` | `cf362969…` / `00c930af…` | 相同 | 一致 |
+| `split_config.xxhdpi.apk` | `ff92800e…` | `81f0ff4c…` | 不同 |
+| 其它语言 split | 无 | ar/et/fr/iw/ja/kk/ru/uk | 设备多 8 个 |
+| `split_config.zh.apk` | `fe0cf4bc…` | 无 | 设备缺 1 个 |
+
+**结论**：`base.apk` 与 ABI split 一致，说明是同一版 Mosey 的不同 ROM 打包；语言/密度 split 差异不影响代码与原生库。
+
+**修改**：`bin/app-check.sh` 改为只校验 `base.apk`（original / patched 两种哈希）与 `split_config.arm64_v8a.apk`，不再要求 split 数量或语言/密度 split 的哈希；日志改为 `MOSEY_60715_BASE_VERIFIED ... splits=N`。
+
+**产物**：`OPAirDrop-v1.0.31-RMX5010-r2.zip`，SHA256 `8b8147402b703e01fc452cc79718ce888d62334390b0e9fa52590d673cf4f5fd`。
+
+旧版（r1）模块快照保存在仓库的 `old/2026-11-11-r1/`。
