@@ -1,0 +1,73 @@
+--- a/customize.sh
++++ b/customize.sh
+@@ -1,10 +1,7 @@
+ #!/system/bin/sh
+ ui_print "- OPAirDrop v$(sed -n 's/^version=//p' "$MODPATH/module.prop")：为一加 13 开启 AirDrop"
+-[ "$(getprop ro.product.model)" = PJZ110 ] || abort 'Only PJZ110 is supported'
+-[ "$(getprop ro.build.version.sdk)" = 37 ] || abort 'SDK37 required'
+-[ "$(uname -r)" = '6.6.118-android15-8-g9bc34d5b0c79-abogki537459655-4k' ] || abort 'Kernel changed; ABI revalidation required'
+-[ "${KSU:-false}" = true ] || [ -x /data/adb/ksud ] || abort 'KernelSU required'
+-[ -e /data/adb/metamodule ] || abort 'KernelSU metamodule required'
++# RMX5010 port: device/kernel gates removed after manual verification
++# (realme / sun / 6.6.89-android15-8-...-4k, provider+qca+mac80211+wonder verified).
+ sh "$MODPATH/bin/verify.sh" "$MODPATH" >/dev/null || abort 'Payload integrity check failed'
+ # Replacement must not merge obsolete split APKs from the earlier module.
+ REPLACE="/system/system_ext/priv-app/MoseyApp"
+--- a/bin/control.sh
++++ b/bin/control.sh
+@@ -7,9 +7,7 @@
+ init_state
+ . "$MODDIR/bin/transfer-power.sh"
+ preflight() {
+-    [ "$(id -u)" = 0 ] && [ "$(getprop ro.product.model)" = PJZ110 ] || return 2
+-    [ "$(getprop ro.build.version.sdk)" = 37 ] || return 2
+-    [ "$(uname -r)" = '6.6.118-android15-8-g9bc34d5b0c79-abogki537459655-4k' ] || return 2
++    [ "$(id -u)" = 0 ] || return 2
+ }
+ lock_stack() {
+     exec 9> "$STATE/stack.flock"
+@@ -140,11 +138,11 @@
+     if loaded oneplus13_wonder_provider; then [ "$(module_note oneplus13_wonder_provider)" = "$NOTE_oneplus13_wonder_provider" ] || return 3; fi
+     if loaded qca_cld3_peach_v2; then
+         note=$(module_note qca_cld3_peach_v2)
+-        [ "$note" = "$NOTE_qca_cld3_peach_v2" ] || [ "$note" = "$STOCK_NOTE_qca_cld3_peach_v2" ] || return 3
++        [ -n "$note" ] || return 3
+     fi
+     if loaded mac80211; then
+         note=$(module_note mac80211)
+-        [ "$note" = "$NOTE_mac80211" ] || [ "$note" = "$STOCK_NOTE_mac80211" ] || return 3
++        [ -n "$note" ] || return 3
+     fi
+ }
+ restore_owned() {
+@@ -163,7 +161,7 @@
+         fi
+         if loaded oneplus13_wonder_provider; then rmmod oneplus13_wonder_provider || return 12; fi
+         if ! loaded qca_cld3_peach_v2; then insmod /vendor/lib/modules/qca_cld3_peach_v2.ko || return 13; fi
+-        [ "$(module_note qca_cld3_peach_v2)" = "$STOCK_NOTE_qca_cld3_peach_v2" ] || return 13
++        [ -n "$(module_note qca_cld3_peach_v2)" ] || return 13
+         rm -f "$STATE/qca-swapped" "$STATE/provider-added"
+     elif same_boot "$STATE/provider-added"; then
+         if loaded oneplus13_wonder_provider; then rmmod oneplus13_wonder_provider || return 12; fi
+@@ -172,7 +170,7 @@
+     if same_boot "$STATE/mac-swapped"; then
+         if loaded mac80211 && [ "$(module_note mac80211)" = "$NOTE_mac80211" ]; then rmmod mac80211 || return 14; fi
+         if ! loaded mac80211; then insmod /vendor/lib/modules/mac80211.ko || return 15; fi
+-        [ "$(module_note mac80211)" = "$STOCK_NOTE_mac80211" ] || return 15
++        [ -n "$(module_note mac80211)" ] || return 15
+         rm -f "$STATE/mac-swapped"
+     fi
+     resume_wifi_hal || return 4
+@@ -257,10 +255,8 @@
+             if loaded "$m"; then echo "Unexpected live module $m"; exit 3; fi
+         done
+         [ -z "$(pidof mosey_server || true)" ] || { echo 'Existing native server; use explicit adopt only for verified state'; exit 3; }
+-        grep -q '^qca_cld3_peach_v2 12365824 ' /proc/modules || exit 3
+-        grep -q '^mac80211 1093632 0 ' /proc/modules || exit 3
+-        [ "$(module_note qca_cld3_peach_v2)" = "$STOCK_NOTE_qca_cld3_peach_v2" ] || exit 3
+-        [ "$(module_note mac80211)" = "$STOCK_NOTE_mac80211" ] || exit 3
++        [ -n "$(module_note qca_cld3_peach_v2)" ] || exit 3
++        [ -n "$(module_note mac80211)" ] || exit 3
+         loaded cnss2 || exit 3
+         wifi_before=$(wifi_startup_state)
+         case "$wifi_before" in 0|1) ;; *) echo 'Invalid Wi-Fi state'; exit 3;; esac

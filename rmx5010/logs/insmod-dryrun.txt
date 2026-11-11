@@ -1,0 +1,205 @@
+
+===== 环境 =====
+kernel: 6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k
+tainted: 4608
+stock modules:
+qca_cld3_peach_v2 12349440 0 - Live 0x0000000000000000 (O)
+cnss2 425984 1 qca_cld3_peach_v2, Live 0x0000000000000000 (O)
+mac80211 1093632 0 - Live 0x0000000000000000
+cfg80211 1146880 2 qca_cld3_peach_v2,mac80211, Live 0x0000000000000000
+wonder 已加载? 0
+provider 已加载? 0
+
+===== 各 .ko 的 vermagic / 构建信息（readelf） =====
+--- mac80211 (17659760 bytes) ---
+--- qca_cld3_peach_v2 (20050688 bytes) ---
+--- wonder (78432 bytes) ---
+--- oneplus13_wonder_provider (271472 bytes) ---
+
+===== 1) insmod mac80211.ko（同名，预期 EEXIST 或 CRC 报错） =====
+insmod: failed to load /data/local/tmp/opairdrop-kernel/mac80211.ko: File exists
+rc=1
+[  942.717441] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  942.718764] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  942.719159] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  942.817957] iostack: irqs = 269820, self-block = 0
+[  942.879404] logd: UpdateProgInfo progname:com.android.systemui pid:5097
+[  942.891771] [IO_METRICS] [binder:2146_2   ] ufs_metrics_proc_show:283  binder:2146_2(2165) read forever/ufs_total_read_size_mb
+[  942.892164] [IO_METRICS] [binder:2146_2   ] ufs_metrics_proc_show:283  binder:2146_2(2165) read forever/ufs_total_write_size_mb
+[  942.904754] [INFO][DSI][DISPLAY][0][panel_ioctl:363] pid = 4846, cmd = PANEL_IOCTL_SET_ULTRA_LOW_POWER_AOD
+[  942.904764] [OFP][0][INFO][oplus_ofp_set_ultra_low_power_aod_mode:4952]ultra_low_power_aod_mode:0
+[  942.905854] [INFO][DSI][DISPLAY][0][oplus_panel_cmd_print:762] [A0022] dsi_cmd: qcom,mdss-dsi-ultra-low-power-aod-off-command
+[  942.908359] [OFP][0][INFO][oplus_ofp_panel_cmd_set_nolock:961]ultra_low_power_aod_state:0
+[  942.916287] KernelSU: handle_setresuid from 0 to 10106
+[  942.924549] logd: UpdateProgInfo progname:audiohalservice.qti pid:1994
+[  942.924926] [INFO][DSI][DISPLAY][0][oplus_display_set_power:286] SDE_MODE_DPMS_LP1
+[  942.924932] [OFP][0][INFO][oplus_ofp_set_display_id:99]oplus_ofp_display_id:0
+[  942.924937] [   info] ts_panel_notifier_callback: Notification type:3, early_trigger:1
+[  942.924939] [   info] ts_panel_notifier_callback: received lp event
+[  942.924943] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_comm_panel_notifier_callback][10746]): received blank_lp event: 1
+[  942.954763] servicemanager: Caller(pid=28666,uid=10106,sid=u:r:priv_app:s0:c512,c768) Found vendor.qti.hardware.perf2.IPerf/default in device VINTF manifest.
+[  942.979195] KernelSU: newfstatat su->sh!
+[  942.979207] KernelSU: faccessat su->sh!
+[  942.979531] KernelSU: sys_execve su found
+[  942.986173] KernelSU: handle_setresuid from 0 to 0
+[  943.088369] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  943.088826] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  943.088964] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  943.094895] [kworke][0x43ca37867][06:53:00.222294] peach_v2: [7:I:PMO] pmo_core_enable_wow_in_fw: drv wow is enabled
+[  943.141682] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_hidden_soc_smooth][3342]): soc[92 92 95 3 18 85 20]
+[  943.153176] OPLUS_CHG[oplus_charge_info]: BATTERY[310 310 4431 4429 -161 92 95 95 5192 5650 1 0x4000 0], CHARGE[4510 300 0 0], WIRED[1 497 4839 500 1 0x0 0 0 0 2 0], WIRELESS[0 0 0 0 0 0x0 0 0 0], VOOC[0 0 0 0 0x0], UFCS[0 0 0 0x0], COMMON[6 0 0 0x0 0 1 1 6500 100 0] 
+[  943.181257] [INFO]: OPLUS_CHG[ADSP]([oplus_chg_8350_reg_dump][7572]): sm8450_st_dump: [chg_en=1, suspend=0, pd_svooc=0], subtype=0x01],[oplus_UsbCommCapable=0, oplus_pd_svooc=0, typec_mode=0, cid_status=0x01, usb_in_status=1],[0x2306=0x83, 0x2307=0x19, 0x2308=0x06, 0x2309=0x0b], [0x230a=0x04, 0x230b=0xb6, 0x230c=0x06, 0x230d=0x34], [0x230e=0x06, 0x230f=0x01, 0x2310=0x20, 0x2340=0x07], [0x2341=0x02, 0x2342=0x05, 0x2346=0x01, 0x2350=0x04], [0x2706=0x0a, 0x2707=0x0a, 0x2708=0x0a, 0x2709=0x0a], [0x270b=0xe2, 0x270c=0x48, 0x2710=0xc0, 0x240c=0x00], [0x2410=0x00, 0x2440=0x05, 0x247f=0x00, 0x2906=0x02], [0x2908=0x0f, 0x290a=0x11, 0x290b=0x01, 0x290c=0x01], [0x2910=0x11, 0x2944=0x80, 0x2950=0x02, 0x2951=0x01], [0x2952=0x0a, 0x2564=0x00, 0x2960=0xa0, 0x2b06=0x08], [0x2b07=0x00, 0x2b08=0x00, 0x2b09=0x63, 0x2b0a=0x19], [0x2b0b=0xa9, 0x2b0c=0x00, 0x29a8=0x84, 0x29a9=0x83], [0x29aa=0x00, 0x2aa2=0x00, 0x2aa8=0x84, 0x2aa9=0x00], [0x2aaa=0x00], 
+
+===== 2) insmod qca_cld3_peach_v2.ko（同名，预期 EEXIST 或 CRC 报错） =====
+insmod: failed to load /data/local/tmp/opairdrop-kernel/qca_cld3_peach_v2.ko: File exists
+rc=1
+[  942.460885] [soft_i][0x43be9b98b][06:52:59.588283] peach_v2: [0:I:WMA] wma_wow_stats_display: assoc:0 disassoc:0 assoc_resp:0 reassoc:0 reassoc_resp:0 auth:0 deauth:0 action:318
+[  942.460895] [soft_i][0x43be9ba43][06:52:59.588293] peach_v2: [0:I:WMA] wma_wow_stats_display: pno_match:0 pno_complete:0 gscan:0 low_rssi:0 rssi_breach:0 oem:0 ucdrop:0 scan_11d:0 fatal_event:0
+[  942.599564] logd: UpdateProgInfo progname:system_server pid:3645
+[  942.717441] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  942.718764] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  942.719159] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  942.817957] iostack: irqs = 269820, self-block = 0
+[  942.879404] logd: UpdateProgInfo progname:com.android.systemui pid:5097
+[  942.891771] [IO_METRICS] [binder:2146_2   ] ufs_metrics_proc_show:283  binder:2146_2(2165) read forever/ufs_total_read_size_mb
+[  942.892164] [IO_METRICS] [binder:2146_2   ] ufs_metrics_proc_show:283  binder:2146_2(2165) read forever/ufs_total_write_size_mb
+[  942.904754] [INFO][DSI][DISPLAY][0][panel_ioctl:363] pid = 4846, cmd = PANEL_IOCTL_SET_ULTRA_LOW_POWER_AOD
+[  942.904764] [OFP][0][INFO][oplus_ofp_set_ultra_low_power_aod_mode:4952]ultra_low_power_aod_mode:0
+[  942.905854] [INFO][DSI][DISPLAY][0][oplus_panel_cmd_print:762] [A0022] dsi_cmd: qcom,mdss-dsi-ultra-low-power-aod-off-command
+[  942.908359] [OFP][0][INFO][oplus_ofp_panel_cmd_set_nolock:961]ultra_low_power_aod_state:0
+[  942.916287] KernelSU: handle_setresuid from 0 to 10106
+[  942.924549] logd: UpdateProgInfo progname:audiohalservice.qti pid:1994
+[  942.924926] [INFO][DSI][DISPLAY][0][oplus_display_set_power:286] SDE_MODE_DPMS_LP1
+[  942.924932] [OFP][0][INFO][oplus_ofp_set_display_id:99]oplus_ofp_display_id:0
+[  942.924937] [   info] ts_panel_notifier_callback: Notification type:3, early_trigger:1
+[  942.924939] [   info] ts_panel_notifier_callback: received lp event
+[  942.924943] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_comm_panel_notifier_callback][10746]): received blank_lp event: 1
+[  942.954763] servicemanager: Caller(pid=28666,uid=10106,sid=u:r:priv_app:s0:c512,c768) Found vendor.qti.hardware.perf2.IPerf/default in device VINTF manifest.
+[  942.979195] KernelSU: newfstatat su->sh!
+[  942.979207] KernelSU: faccessat su->sh!
+[  942.979531] KernelSU: sys_execve su found
+[  942.986173] KernelSU: handle_setresuid from 0 to 0
+[  943.088369] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  943.088826] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  943.088964] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  943.094895] [kworke][0x43ca37867][06:53:00.222294] peach_v2: [7:I:PMO] pmo_core_enable_wow_in_fw: drv wow is enabled
+[  943.141682] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_hidden_soc_smooth][3342]): soc[92 92 95 3 18 85 20]
+[  943.153176] OPLUS_CHG[oplus_charge_info]: BATTERY[310 310 4431 4429 -161 92 95 95 5192 5650 1 0x4000 0], CHARGE[4510 300 0 0], WIRED[1 497 4839 500 1 0x0 0 0 0 2 0], WIRELESS[0 0 0 0 0 0x0 0 0 0], VOOC[0 0 0 0 0x0], UFCS[0 0 0 0x0], COMMON[6 0 0 0x0 0 1 1 6500 100 0] 
+[  943.181257] [INFO]: OPLUS_CHG[ADSP]([oplus_chg_8350_reg_dump][7572]): sm8450_st_dump: [chg_en=1, suspend=0, pd_svooc=0], subtype=0x01],[oplus_UsbCommCapable=0, oplus_pd_svooc=0, typec_mode=0, cid_status=0x01, usb_in_status=1],[0x2306=0x83, 0x2307=0x19, 0x2308=0x06, 0x2309=0x0b], [0x230a=0x04, 0x230b=0xb6, 0x230c=0x06, 0x230d=0x34], [0x230e=0x06, 0x230f=0x01, 0x2310=0x20, 0x2340=0x07], [0x2341=0x02, 0x2342=0x05, 0x2346=0x01, 0x2350=0x04], [0x2706=0x0a, 0x2707=0x0a, 0x2708=0x0a, 0x2709=0x0a], [0x270b=0xe2, 0x270c=0x48, 0x2710=0xc0, 0x240c=0x00], [0x2410=0x00, 0x2440=0x05, 0x247f=0x00, 0x2906=0x02], [0x2908=0x0f, 0x290a=0x11, 0x290b=0x01, 0x290c=0x01], [0x2910=0x11, 0x2944=0x80, 0x2950=0x02, 0x2951=0x01], [0x2952=0x0a, 0x2564=0x00, 0x2960=0xa0, 0x2b06=0x08], [0x2b07=0x00, 0x2b08=0x00, 0x2b09=0x63, 0x2b0a=0x19], [0x2b0b=0xa9, 0x2b0c=0x00, 0x29a8=0x84, 0x29a9=0x83], [0x29aa=0x00, 0x2aa2=0x00, 0x2aa8=0x84, 0x2aa9=0x00], [0x2aaa=0x00], 
+[  943.246459] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  943.247668] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  943.248021] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  943.260854] [kworke][0x43cd41740][06:53:00.388253] peach_v2: [7:I:PMO] pmo_core_psoc_send_host_wakeup_ind_to_fw: Host wakeup indication sent to fw
+[  943.277295] [schedu][0x43cd8e830][06:53:00.404692] peach_v2: [6712:W:PE] rrm_process_link_measurement_request: Link Request Tx Pwr: 28 Link Report Tx Pwr: 24
+[  943.277309] [schedu][0x43cd8e94e][06:53:00.404707] peach_v2: [6712:I:PE] rrm_process_link_measurement_request: Received Link report frame with -43
+[  943.277344] [schedu][0x43cd8ebf4][06:53:00.404742] peach_v2: [6712:W:PE] lim_send_link_report_action_frame: RRM: Sending Link Report to c8:c4:65:**:**:21 on vdev[0]
+
+===== 3) insmod wonder.ko（无同名冲突，可能真加载） =====
+rc=0
+[  942.924926] [INFO][DSI][DISPLAY][0][oplus_display_set_power:286] SDE_MODE_DPMS_LP1
+[  942.924932] [OFP][0][INFO][oplus_ofp_set_display_id:99]oplus_ofp_display_id:0
+[  942.924937] [   info] ts_panel_notifier_callback: Notification type:3, early_trigger:1
+[  942.924939] [   info] ts_panel_notifier_callback: received lp event
+[  942.924943] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_comm_panel_notifier_callback][10746]): received blank_lp event: 1
+[  942.954763] servicemanager: Caller(pid=28666,uid=10106,sid=u:r:priv_app:s0:c512,c768) Found vendor.qti.hardware.perf2.IPerf/default in device VINTF manifest.
+[  942.979195] KernelSU: newfstatat su->sh!
+[  942.979207] KernelSU: faccessat su->sh!
+[  942.979531] KernelSU: sys_execve su found
+[  942.986173] KernelSU: handle_setresuid from 0 to 0
+[  943.088369] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  943.088826] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  943.088964] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  943.094895] [kworke][0x43ca37867][06:53:00.222294] peach_v2: [7:I:PMO] pmo_core_enable_wow_in_fw: drv wow is enabled
+[  943.141682] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_hidden_soc_smooth][3342]): soc[92 92 95 3 18 85 20]
+[  943.153176] OPLUS_CHG[oplus_charge_info]: BATTERY[310 310 4431 4429 -161 92 95 95 5192 5650 1 0x4000 0], CHARGE[4510 300 0 0], WIRED[1 497 4839 500 1 0x0 0 0 0 2 0], WIRELESS[0 0 0 0 0 0x0 0 0 0], VOOC[0 0 0 0 0x0], UFCS[0 0 0 0x0], COMMON[6 0 0 0x0 0 1 1 6500 100 0] 
+[  943.181257] [INFO]: OPLUS_CHG[ADSP]([oplus_chg_8350_reg_dump][7572]): sm8450_st_dump: [chg_en=1, suspend=0, pd_svooc=0], subtype=0x01],[oplus_UsbCommCapable=0, oplus_pd_svooc=0, typec_mode=0, cid_status=0x01, usb_in_status=1],[0x2306=0x83, 0x2307=0x19, 0x2308=0x06, 0x2309=0x0b], [0x230a=0x04, 0x230b=0xb6, 0x230c=0x06, 0x230d=0x34], [0x230e=0x06, 0x230f=0x01, 0x2310=0x20, 0x2340=0x07], [0x2341=0x02, 0x2342=0x05, 0x2346=0x01, 0x2350=0x04], [0x2706=0x0a, 0x2707=0x0a, 0x2708=0x0a, 0x2709=0x0a], [0x270b=0xe2, 0x270c=0x48, 0x2710=0xc0, 0x240c=0x00], [0x2410=0x00, 0x2440=0x05, 0x247f=0x00, 0x2906=0x02], [0x2908=0x0f, 0x290a=0x11, 0x290b=0x01, 0x290c=0x01], [0x2910=0x11, 0x2944=0x80, 0x2950=0x02, 0x2951=0x01], [0x2952=0x0a, 0x2564=0x00, 0x2960=0xa0, 0x2b06=0x08], [0x2b07=0x00, 0x2b08=0x00, 0x2b09=0x63, 0x2b0a=0x19], [0x2b0b=0xa9, 0x2b0c=0x00, 0x29a8=0x84, 0x29a9=0x83], [0x29aa=0x00, 0x2aa2=0x00, 0x2aa8=0x84, 0x2aa9=0x00], [0x2aaa=0x00], 
+[  943.246459] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[  943.247668] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[  943.248021] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[  943.260854] [kworke][0x43cd41740][06:53:00.388253] peach_v2: [7:I:PMO] pmo_core_psoc_send_host_wakeup_ind_to_fw: Host wakeup indication sent to fw
+[  943.277295] [schedu][0x43cd8e830][06:53:00.404692] peach_v2: [6712:W:PE] rrm_process_link_measurement_request: Link Request Tx Pwr: 28 Link Report Tx Pwr: 24
+[  943.277309] [schedu][0x43cd8e94e][06:53:00.404707] peach_v2: [6712:I:PE] rrm_process_link_measurement_request: Received Link report frame with -43
+[  943.277344] [schedu][0x43cd8ebf4][06:53:00.404742] peach_v2: [6712:W:PE] lim_send_link_report_action_frame: RRM: Sending Link Report to c8:c4:65:**:**:21 on vdev[0]
+[  943.336491] wonder wonder: wonder_probe(): probe
+[  943.336509] [wonder][mac80211] Set MAC addrs from wlan0: xx:xx:xx:xx:xx:xx
+[  943.336625] ieee80211 wonder: Failed to select rate control algorithm
+[  943.336627] ieee80211 wonder: Failed to initialize rate control algorithm
+[  943.336646] [wonder][mac80211] Wonder Virtual Soft-MAC Driver loaded failed.
+[  943.336647] [wonder][mac80211] Failed to register mac80211 hardware. Ret: -2
+wonder 已加载，执行 rmmod
+rmmod rc=0
+[  943.336647] [wonder][mac80211] Failed to register mac80211 hardware. Ret: -2
+[  943.447401] [INFO][DSI][DISPLAY][0][oplus_display_set_power:286] SDE_MODE_DPMS_LP2
+[  943.447412] [OFP][0][INFO][oplus_ofp_set_display_id:99]oplus_ofp_display_id:0
+[  943.447419] [   info] ts_panel_notifier_callback: Notification type:3, early_trigger:1
+[  943.447421] [   info] ts_panel_notifier_callback: received lp event
+[  943.447427] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_comm_panel_notifier_callback][10746]): received blank_lp event: 1
+[  943.448670] [INFO][DSI][DISPLAY][0][panel_ioctl:363] pid = 4846, cmd = PANEL_IOCTL_SET_ULTRA_LOW_POWER_AOD
+[  943.448677] [OFP][0][INFO][oplus_ofp_set_ultra_low_power_aod_mode:4952]ultra_low_power_aod_mode:1
+[  943.448686] [INFO][DSI][DISPLAY][0][oplus_panel_cmd_print:762] [A0022] dsi_cmd: qcom,mdss-dsi-ultra-low-power-aod-on-command
+[  943.448875] [OFP][0][INFO][oplus_ofp_panel_cmd_set_nolock:955]ultra_low_power_aod_state:1
+
+===== 4) insmod oneplus13_wonder_provider.ko（无同名冲突） =====
+rc=0
+[  943.260854] [kworke][0x43cd41740][06:53:00.388253] peach_v2: [7:I:PMO] pmo_core_psoc_send_host_wakeup_ind_to_fw: Host wakeup indication sent to fw
+[  943.277295] [schedu][0x43cd8e830][06:53:00.404692] peach_v2: [6712:W:PE] rrm_process_link_measurement_request: Link Request Tx Pwr: 28 Link Report Tx Pwr: 24
+[  943.277309] [schedu][0x43cd8e94e][06:53:00.404707] peach_v2: [6712:I:PE] rrm_process_link_measurement_request: Received Link report frame with -43
+[  943.277344] [schedu][0x43cd8ebf4][06:53:00.404742] peach_v2: [6712:W:PE] lim_send_link_report_action_frame: RRM: Sending Link Report to c8:c4:65:**:**:21 on vdev[0]
+[  943.336491] wonder wonder: wonder_probe(): probe
+[  943.336509] [wonder][mac80211] Set MAC addrs from wlan0: xx:xx:xx:xx:xx:xx
+[  943.336625] ieee80211 wonder: Failed to select rate control algorithm
+[  943.336627] ieee80211 wonder: Failed to initialize rate control algorithm
+[  943.336646] [wonder][mac80211] Wonder Virtual Soft-MAC Driver loaded failed.
+[  943.336647] [wonder][mac80211] Failed to register mac80211 hardware. Ret: -2
+[  943.447401] [INFO][DSI][DISPLAY][0][oplus_display_set_power:286] SDE_MODE_DPMS_LP2
+[  943.447412] [OFP][0][INFO][oplus_ofp_set_display_id:99]oplus_ofp_display_id:0
+[  943.447419] [   info] ts_panel_notifier_callback: Notification type:3, early_trigger:1
+[  943.447421] [   info] ts_panel_notifier_callback: received lp event
+[  943.447427] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_comm_panel_notifier_callback][10746]): received blank_lp event: 1
+[  943.448670] [INFO][DSI][DISPLAY][0][panel_ioctl:363] pid = 4846, cmd = PANEL_IOCTL_SET_ULTRA_LOW_POWER_AOD
+[  943.448677] [OFP][0][INFO][oplus_ofp_set_ultra_low_power_aod_mode:4952]ultra_low_power_aod_mode:1
+[  943.448686] [INFO][DSI][DISPLAY][0][oplus_panel_cmd_print:762] [A0022] dsi_cmd: qcom,mdss-dsi-ultra-low-power-aod-on-command
+[  943.448875] [OFP][0][INFO][oplus_ofp_panel_cmd_set_nolock:955]ultra_low_power_aod_state:1
+[  943.518153] oneplus13_wonder_provider: created qcom,cnss-vendor-wlan-wonder; stock CNSS untouched
+provider 已加载，执行 rmmod
+rmmod rc=0
+
+===== 收尾状态 =====
+tainted: 4608
+残留 wonder: 0
+残留 provider: 0
+wlan 接口:
+lo:
+dummy0:
+ifb0:
+ifb1:
+tunl0@NONE:
+gre0@NONE:
+gretap0@NONE:
+erspan0@NONE:
+ip_vti0@NONE:
+ip6_vti0@NONE:
+sit0@NONE:
+ip6tnl0@NONE:
+ip6gre0@NONE:
+ovnet0:
+ovnet1:
+ovnet2:
+rmnet_ipa0:
+ifb2:
+rmnet_data2@rmnet_ipa0:
+rmnet_data1@rmnet_ipa0:
+rmnet_data0@rmnet_ipa0:
+r_rmnet_data0@rmnet_ipa0:
+r_rmnet_data1@rmnet_ipa0:
+r_rmnet_data2@rmnet_ipa0:
+r_rmnet_data3@rmnet_ipa0:
+rmnet_data3@rmnet_ipa0:
+wlan0:
+p2p0:
+wifi-aware0:
+wifi 状态: Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=13357 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+
+DONE

@@ -1,0 +1,207 @@
+
+===== 开始 =====
+kernel=6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k
+wifi=Wifi is enabled
+
+===== 1. 关 Wi-Fi / 停 HAL =====
+wifi=Wifi is disabled waited=0s
+hal=stopped waited=0s
+
+===== 2. rmmod 原厂 qca（mac80211 暂时保留，与 control.sh 一致） =====
+rc=0
+
+===== 3. insmod oneplus13_wonder_provider.ko =====
+rc=0
+[ 1153.148124] msm_pcie_config_perst: PCIe: RC0: assert PERST
+[ 1153.148947] invalid GPIO -22
+[ 1153.149043] cnss: QMI WLFW service disconnected, state: 0x132fa6000
+[ 1153.149730] [rmmod][0x52d06f8e8][06:56:30.277128] peach_v2: [30494:I:tdls] ucfg_tdls_deinit: tdls module dispatcher deinit
+[ 1153.149736] [rmmod][0x52d06f96c][06:56:30.277135] peach_v2: [30494:I:POLICY_MGR] policy_mgr_deinit: deregistered callbacks with obj mgr successfully
+[ 1153.149746] [rmmod][0x52d06fa21][06:56:30.277144] peach_v2: [30494:I:IPA] ipa_deinit: ipa module dispatcher deinit
+[ 1153.149789] [rmmod][0x52d06fd6b][06:56:30.277188] peach_v2: [30494:I:GREEN_AP] wlan_green_ap_deinit: Successfully unregistered create and destroy handlers with objmgr
+[ 1153.151500] wcnss enter pool check
+[ 1153.168807] logd: logdr: UID=1000 GID=1000 PID=30539 n tail=127 logMask=19 pid=0 start=0ns deadline=0ns
+[ 1153.178668] oneplus13_wonder_provider: created qcom,cnss-vendor-wlan-wonder; stock CNSS untouched
+
+===== 4. insmod qca_cld3_peach_v2.ko（带 control.sh 的全套参数） =====
+rc=0
+[ 1153.917903] hans_report: hans_deamon_port invalid!
+[ 1153.920604] wlan_hdd_state wlan major(452) initialized
+[ 1153.939847] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Could not find android.hardware.radio.ims.IRadioIms/slot1 in the VINTF manifest. No alternative instances declared in VINTF.
+[ 1153.942166] qrtr: announce_servers(): Avoiding duplicate announce for NODE ID 7
+[ 1153.942616] cnss: QMI WLFW service connected, state: 0x146f26011
+[ 1153.951194] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1153.951659] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1153.951809] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1153.956301] cnss: serial id  0x0 0x0
+[ 1153.957842] cnss: TME patch information request failed, result: 1, err: 83
+[ 1153.960575] ueventd: firmware: loading 'cnss_softsku_peach.pfm' for '/devices/platform/soc/b0000000.qcom,cnss-peach/firmware/cnss_softsku_peach.pfm'
+[ 1153.962109] ueventd: firmware: could not find firmware for cnss_softsku_peach.pfm
+[ 1153.962138] ueventd: firmware: attempted /etc/firmware/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962152] ueventd: firmware: attempted /odm/firmware/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962164] ueventd: firmware: attempted /data/vendor/firmware/update/cnss_softsku_peach.pfm, open failed: Permission denied
+[ 1153.962175] ueventd: firmware: attempted /vendor/firmware/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962187] ueventd: firmware: attempted /firmware/image/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962200] ueventd: firmware: attempted /vendor/firmware_mnt/image/qca6490/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962211] ueventd: firmware: attempted /data/oplus/fw_update/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962223] ueventd: firmware: attempted /mnt/vendor/persist/copy/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962234] ueventd: firmware: attempted /mnt/vendor/persist/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962246] ueventd: firmware: attempted /odm/etc/wifi/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962257] ueventd: firmware: attempted /vendor/firmware_mnt/image/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962269] ueventd: firmware: attempted /mnt/vendor/persist/copy/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962280] ueventd: firmware: attempted /odm/etc/wifi/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962291] ueventd: firmware: attempted /mnt/vendor/persist/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962302] ueventd: firmware: attempted /vendor/firmware_mnt/image/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962314] ueventd: firmware: attempted /mnt/vendor/persist/display/cnss_softsku_peach.pfm, open failed: No such file or directory
+[ 1153.962413] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/cnss_softsku_peach.pfm took 1ms
+[ 1153.962620] cnss: Failed to load Soft SKU License: cnss_softsku_peach.pfm, ret: -2
+[ 1153.968219] ueventd: firmware: loading 'peach/regdb.bin' for '/devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!regdb.bin'
+[ 1153.968874] ueventd: found /odm/etc/wifi/peach/regdb.bin for /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!regdb.bin
+[ 1153.969083] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!regdb.bin took 1ms
+[ 1153.969329] cnss: Downloading REGDB: peach/regdb.bin, size: 24278
+[ 1153.978041] cnss: region id: 0, nvid: 0x97, wcn chip_id: 0x02
+[ 1153.978054] cnss: the project support region id is: 24600
+[ 1153.984048] ueventd: firmware: loading 'peach/bdwlan.elf' for '/devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!bdwlan.elf'
+[ 1153.984671] ueventd: found /odm/etc/wifi/peach/bdwlan.elf for /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!bdwlan.elf
+[ 1153.985047] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!bdwlan.elf took 1ms
+[ 1153.985268] cnss: Downloading BDF: peach/bdwlan.elf, size: 125328
+
+===== 5. rmmod 原厂 mac80211 / insmod 我们的 mac80211 =====
+rmmod rc=0
+insmod rc=0
+[ 1154.039615] ueventd: firmware: attempted /mnt/vendor/persist/peach/qdss_trace_config_perf_v2.cfg, open failed: No such file or directory
+[ 1154.039626] ueventd: firmware: attempted /vendor/firmware_mnt/image/peach/qdss_trace_config_perf_v2.cfg, open failed: No such file or directory
+[ 1154.039638] ueventd: firmware: attempted /mnt/vendor/persist/display/peach/qdss_trace_config_perf_v2.cfg, open failed: No such file or directory
+[ 1154.039745] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!qdss_trace_config_perf_v2.cfg took 2ms
+[ 1154.045806] ueventd: firmware: loading 'peach/qdss_trace_config_v2.cfg' for '/devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!qdss_trace_config_v2.cfg'
+[ 1154.046541] ueventd: found /vendor/firmware_mnt/image/peach/qdss_trace_config_v2.cfg for /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!qdss_trace_config_v2.cfg
+[ 1154.046710] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-peach/firmware/peach!qdss_trace_config_v2.cfg took 1ms
+[ 1154.060735] cnss: Received DMS MAC: [xx:xx:xx:xx:xx:xx]
+[ 1154.066542] ueventd: firmware: loading 'wlan/WCNSS_qcom_cfg.ini' for '/devices/virtual/firmware/wlan!WCNSS_qcom_cfg.ini'
+[ 1154.066794] ueventd: found /mnt/vendor/persist/wlan/WCNSS_qcom_cfg.ini for /devices/virtual/firmware/wlan!WCNSS_qcom_cfg.ini
+[ 1154.066873] ueventd: loading /devices/virtual/firmware/wlan!WCNSS_qcom_cfg.ini took 0ms
+[ 1154.151890] wlan_pld:pld_is_ipa_offload_disabled:2839:: Not supported on type 0
+[ 1154.152856] cnss: Unable to get ipa iommu group phandle
+[ 1154.152952] [kworke][0x52e2ce272][06:56:31.280349] peach_v2: [23796:E:QDF] __cds_get_context: Module ID 53 context is Null (via wlan_mlme_set_epcs_capability)
+[ 1154.153080] [kworke][0x52e2cec10][06:56:31.280477] peach_v2: [23796:E:POLICY_MGR] policy_mgr_init_cfg: max_conc_cxns 4 non-nan
+[ 1154.154135] [kworke][0x52e2d3b3a][06:56:31.281532] peach_v2: [23796:E:QDF] __cds_get_context: Module ID 66 context is Null (via hdd_update_ol_config)
+[ 1154.154441] [kworke][0x52e2d5229][06:56:31.281838] peach_v2: [23796:E:QDF] __cds_get_context: Module ID 66 context is Null (via cds_open)
+[ 1154.155878] [kworke][0x52e2dbdf0][06:56:31.283275] peach_v2: [23796:I:WMA] wma_open: WMA --> wmi_unified_attach - success
+[ 1154.158641] [kworke][0x52e2e8d38][06:56:31.286039] peach_v2: [23796:E:QDF] htc_wait_target: Target Ready! TX resource : 1 size:2176, MaxMsgsPerHTCBundle = 1
+[ 1154.158653] [kworke][0x52e2e8e1b][06:56:31.286051] peach_v2: [23796:E:QDF] htc_setup_target_buffer_assignments: SVS Index : 1 TX : 0x100 : alloc:1
+
+===== 6. insmod wonder.ko =====
+rc=0
+[ 1154.178161] wonder wonder: wonder_probe(): No DT node, matching provider by name 'qcom,cnss-vendor-wlan-wonder'
+[ 1154.181014] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.181658] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.181896] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.182388] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.182606] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.182812] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1154.192998] [kworke][0x52e389db6][06:56:31.320392] peach_v2: [1206:I:WMA] wma_rx_service_ready_event: Firmware build version : 10097fff
+[ 1154.193003] OP13SERVICES: ocb=0 fw_build=10097fff
+[ 1154.193008] OP13NAN: nan_data=1 nan=1 sync_delete=1
+[ 1154.193012] [kworke][0x52e389f25][06:56:31.320411] peach_v2: [1206:I:WMA] wma_rx_service_ready_event: Board version: 8 0 0 0 1
+[ 1154.193879] [kworke][0x52e38e023][06:56:31.321278] peach_v2: [1206:E:WMA] wma_update_supported_bands: wrong supported band
+[ 1154.193883] [kworke][0x52e38e06e][06:56:31.321282] peach_v2: [1206:E:WMA] wma_update_supported_bands: wrong supported band
+[ 1154.194052] [kworke][0x52e38ed13][06:56:31.321450] peach_v2: [1206:I:WMI] extract_hw_bdf_status: FW and BDF ver check skipped
+[ 1154.194060] [kworke][0x52e38edae][06:56:31.321458] peach_v2: [1206:E:TIF] get_sar_flag: failed to parse sar flag
+[ 1154.194224] [kworke][0x52e38f9fa][06:56:31.321622] peach_v2: [1206:I:TIF] init_deinit_populate_aux_dev_cap_ext2: num_aux_dev_caps = 2
+[ 1154.194228] [kworke][0x52e38fa47][06:56:31.321626] peach_v2: [1206:I:WMI] extract_aux_dev_cap_service_ready_ext2_tlv: idx 0 aux_index 0, hw_mode_id 0, supported_modes_bitmap 0x0, listen_pdev_id_map 0x0, emlsr_pdev_id_map 0x0
+[ 1154.194231] [kworke][0x52e38fa83][06:56:31.321629] peach_v2: [1206:I:WMI] extract_aux_dev_cap_service_ready_ext2_tlv: idx 1 aux_index 0, hw_mode_id 5, supported_modes_bitmap 0x0, listen_pdev_id_map 0x0, emlsr_pdev_id_map 0x0
+[ 1154.213964] gsi soc:qcom,msm_gsi: gsi_stop_channel:3679 chan=1 busy try again
+[ 1154.216069] gsi soc:qcom,msm_gsi: gsi_stop_channel:3679 chan=14 busy try again
+interfaces:
+lo: dummy0: ifb0: ifb1: tunl0@NONE: gre0@NONE: gretap0@NONE: erspan0@NONE: ip_vti0@NONE: ip6_vti0@NONE: sit0@NONE: ip6tnl0@NONE: ip6gre0@NONE: ovnet0: ovnet1: ovnet2: rmnet_ipa0: ifb2: rmnet_data2@rmnet_ipa0: rmnet_data1@rmnet_ipa0: rmnet_data0@rmnet_ipa0: r_rmnet_data0@rmnet_ipa0: r_rmnet_data1@rmnet_ipa0: r_rmnet_data2@rmnet_ipa0: r_rmnet_data3@rmnet_ipa0: rmnet_data3@rmnet_ipa0: 
+
+===== 7. 起 HAL / 开 Wi-Fi =====
+wifi=Wifi is enabled waited=1s
+wlan0=34: wlan0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DORMANT group default qlen 3000
+
+===== 8. 驱动能力参数 =====
+params=117 awdl=98
+passthru_native_data_rx=Y
+passthru_awdl_raw_rx=Y
+passthru_awdl_backpressure=Y
+passthru_awdl_target_auto=Y
+passthru_awdl_rx_auto=Y
+passthru_awdl_rx_rearm=Y
+passthru_sta_coexist=3
+passthru_sta_regular_rx=Y
+passthru_sta_action_rx=Y
+passthru_awdl_wmi_raw=Y
+channel_state=cookie=0 busy=0 fault=0 error=0 accepting=0 vdev=255 freq=0
+wonder0=
+[ 1157.560834] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1157.561684] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1157.561800] [binder][0x53213922e][06:56:34.689198] peach_v2: [30696:E:REGULATORY] reg_get_band_from_cur_chan_list: Failed to retrieve the channel list
+[ 1157.561808] [binder][0x5321392d7][06:56:34.689207] peach_v2: [30696:E:HDD] hdd_send_usable_channel: No data requested
+[ 1157.561811] [binder][0x532139313][06:56:34.689210] peach_v2: [30696:E:HDD] __wlan_hdd_cfg80211_get_usable_channel: failed to send usable_channels
+[ 1157.562405] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1157.562976] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1157.563717] servicemanager: Caller(pid=3645,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+[ 1157.563902] [binder][0x532142fdb][06:56:34.691300] peach_v2: [30656:E:REGULATORY] reg_get_band_from_cur_chan_list: Failed to retrieve the channel list
+[ 1157.563909] [binder][0x53214306c][06:56:34.691308] peach_v2: [30656:E:HDD] hdd_send_usable_channel: No data requested
+[ 1157.563913] [binder][0x5321430a8][06:56:34.691311] peach_v2: [30656:E:HDD] __wlan_hdd_cfg80211_get_usable_channel: failed to send usable_channels
+[ 1157.857918] iostack: irqs = 273051, self-block = 0
+[ 1157.956683] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1157.958037] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1157.958433] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1158.014458] [soft_i][0x532982f6f][06:56:35.141855] peach_v2: [0:E:REGULATORY] reg_process_ch_avoid_event: skipping LTE Coex unsafe channel change
+[ 1158.014478] [soft_i][0x5329830ea][06:56:35.141875] peach_v2: [0:E:TIF] tgt_reg_ch_avoid_event_handler: Failed to process CH avoid event
+[ 1158.123669] [IO_METRICS] [binder:2146_1   ] ufs_metrics_proc_show:283  binder:2146_1(2164) read forever/ufs_total_read_size_mb
+[ 1158.124014] [IO_METRICS] [binder:2146_1   ] ufs_metrics_proc_show:283  binder:2146_1(2164) read forever/ufs_total_write_size_mb
+[ 1158.189508] [INFO]: OPLUS_CHG[CHG_COMM]([oplus_hidden_soc_smooth][3342]): soc[93 93 96 3 18 85 20]
+[ 1158.201747] OPLUS_CHG[oplus_charge_info]: BATTERY[303 303 4428 4425 -138 93 96 96 5212 5650 1 0x4000 0], CHARGE[4510 300 0 0], WIRED[1 497 4845 500 1 0x0 0 0 0 2 0], WIRELESS[0 0 0 0 0 0x0 0 0 0], VOOC[0 0 0 0 0x0], UFCS[0 0 0 0x0], COMMON[6 0 0 0x0 0 1 1 6500 100 0] 
+[ 1158.231244] [INFO]: OPLUS_CHG[ADSP]([oplus_chg_8350_reg_dump][7572]): sm8450_st_dump: [chg_en=1, suspend=0, pd_svooc=0], subtype=0x01],[oplus_UsbCommCapable=0, oplus_pd_svooc=0, typec_mode=0, cid_status=0x01, usb_in_status=1],[0x2306=0x83, 0x2307=0x19, 0x2308=0x06, 0x2309=0x0b], [0x230a=0x04, 0x230b=0xb6, 0x230c=0x06, 0x230d=0x24], [0x230e=0x06, 0x230f=0x01, 0x2310=0x20, 0x2340=0x07], [0x2341=0x02, 0x2342=0x05, 0x2346=0x01, 0x2350=0x04], [0x2706=0x0a, 0x2707=0x0a, 0x2708=0x0a, 0x2709=0x0a], [0x270b=0xe2, 0x270c=0x48, 0x2710=0xc0, 0x240c=0x00], [0x2410=0x00, 0x2440=0x05, 0x247f=0x00, 0x2906=0x02], [0x2908=0x0f, 0x290a=0x11, 0x290b=0x01, 0x290c=0x01], [0x2910=0x11, 0x2944=0x80, 0x2950=0x02, 0x2951=0x01], [0x2952=0x0a, 0x2564=0x00, 0x2960=0xa0, 0x2b06=0x08], [0x2b07=0x00, 0x2b08=0x00, 0x2b09=0x63, 0x2b0a=0x19], [0x2b0b=0xa9, 0x2b0c=0x00, 0x29a8=0x84, 0x29a9=0x83], [0x29aa=0x00, 0x2aa2=0x00, 0x2aa8=0x84, 0x2aa9=0x00], [0x2aaa=0x00], 
+[ 1158.316063] servicemanager: Caller(pid=2724,uid=1000,sid=u:r:vendor_cnd:s0) Found android.hardware.wifi.supplicant.ISupplicant/default in device VINTF manifest.
+[ 1158.320998] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1158.322438] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1158.322842] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1158.466118] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1158.466505] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1158.466563] init: processing action (kick-init-watchdog) from (/system_ext/etc/init/self_init_theia.rc:57)
+[ 1158.466928] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+
+===== 9. 结果 =====
+RESULT=OK 驱动换入成功，Wi-Fi 正常
+
+===== 10. 回滚（测试完恢复原厂） =====
+
+===== 回滚到原厂模块 =====
+rmmod wonder rc=0
+rmmod qca rc=0
+rmmod provider rc=0
+rmmod mac80211 rc=0
+stock mac80211 rc=0
+stock qca rc=0
+wifi: Wifi is enabled
+qca_cld3_peach_v2 12349440 0 - Live 0x0000000000000000 (O)
+mac80211 1093632 0 - Live 0x0000000000000000
+cfg80211 1146880 2 qca_cld3_peach_v2,mac80211, Live 0x0000000000000000
+[ 1170.969658] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1170.970098] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1170.970225] servicemanager: Caller(pid=5367,uid=1001,sid=u:r:radio:s0) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1171.012928] [schedu][0x5417854c4][06:56:48.140326] peach_v2: [30806:W:PE] rrm_process_link_measurement_request: Link Request Tx Pwr: 28 Link Report Tx Pwr: 24
+[ 1171.012935] [schedu][0x541785554][06:56:48.140333] peach_v2: [30806:I:PE] rrm_process_link_measurement_request: Received Link report frame with -43
+[ 1171.012952] [schedu][0x541785693][06:56:48.140350] peach_v2: [30806:W:PE] lim_send_link_report_action_frame: RRM: Sending Link Report to c8:c4:65:**:**:21 on vdev[0]
+[ 1171.086869] hans_report: hans_deamon_port invalid!
+[ 1171.087111] hans_report: hans_deamon_port invalid!
+[ 1171.245043] qcom_smp2p soc:qcom,smp2p-adsp: 2:sleepstate_see: status:1 sensor_type:244 ap_stat:1
+[ 1171.258559] [vendor][0x541c04b1f][06:56:48.385957] peach_v2: [31017:E:HDD] hdd_config_power: power attr and opm attr is null
+[ 1171.334145] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1171.334572] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1171.334720] servicemanager: Caller(pid=23919,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1171.335177] type=1400 audit(1794380208.458:934): avc:  denied  { bind } for  comm="ip" scontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tcontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tclass=netlink_route_socket permissive=0 bug=b/155595000 app=com.tencent.mm
+[ 1171.335219] type=1400 audit(1794380208.458:935): avc:  denied  { bind } for  comm="ip" scontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tcontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tclass=netlink_route_socket permissive=0 bug=b/155595000 app=com.tencent.mm
+[ 1171.479631] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Since 'opluslinkkit' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+[ 1171.480710] init: Control message: Could not find 'aidl/opluslinkkit' for ctl.interface_start from pid: 1197 (/system/bin/servicemanager)
+[ 1171.481005] servicemanager: Caller(pid=23861,uid=10387,sid=u:r:untrusted_app:s0:c131,c257,c512,c768) Tried to start aidl service opluslinkkit as a lazy service, but was unable to. Usually this happens when a service is not installed, but if the service is intended to be used as a lazy service, then it may be configured incorrectly.
+[ 1171.540157] type=1400 audit(1794380208.662:936): avc:  denied  { bind } for  comm="ip" scontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tcontext=u:r:untrusted_app:s0:c125,c257,c512,c768 tclass=netlink_route_socket permissive=0 bug=b/155595000 app=com.tencent.mm
+[ 1171.579046] shs ooo: phy 0 new_cpu 4 old_cpu 2, offset 0 node_qhead 21, cur_qhead 20, ff 0 old cpu qdiff 0 new qdiff 0 
+FINAL modules:
+qca_cld3_peach_v2 12349440 0 - Live 0x0000000000000000 (O)
+mac80211 1093632 0 - Live 0x0000000000000000
+cfg80211 1146880 2 qca_cld3_peach_v2,mac80211, Live 0x0000000000000000
+FINAL wifi=Wifi is enabled

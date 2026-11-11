@@ -1,0 +1,391 @@
+
+===== 0. 环境 =====
+whoami: uid=0(root) gid=0(root) groups=0(root) context=u:r:ksu:s0
+selinux: Enforcing
+uname: Linux localhost 6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k #1 SMP PREEMPT Mon Dec  8 04:00:43 UTC 2025 aarch64 Toybox
+pagesize: 4096
+
+===== 1. 设备与系统 =====
+ro.product.model=RMX5010
+ro.product.name=RMX5010
+ro.product.device=RE6018L1
+ro.product.brand=realme
+ro.product.manufacturer=realme
+ro.product.vendor.brand=realme
+ro.product.vendor.manufacturer=realme
+ro.board.platform=sun
+ro.soc.model=SM8750
+ro.soc.manufacturer=QTI
+ro.build.version.release=16
+ro.build.version.sdk=36
+ro.build.display.id=RMX5010_16.0.5.700(CN01)
+ro.build.fingerprint=realme/RMX5010/RE6018L1:16/BP2A.250605.015/V.137b791_f5a532_f4f459:user/release-keys
+ro.vendor.build.fingerprint=realme/RMX5010/RE6018L1:16/BP2A.250605.015/V.137b791_f5a532_f4f459:user/release-keys
+ro.vendor.oplus.market.enname=realme GT 7 Pro
+ro.product.marketname=
+ro.boot.hardware=qcom
+ro.boot.hardware.sku=
+ro.boot.project_name=
+ro.build.type=user
+ro.debuggable=0
+
+===== 2. 内核身份 =====
+release: 6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k
+OK: 6.6.89 家族
+--- /proc/version ---
+Linux version 6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k (kleaf@build-host) (Android (11368308, +pgo, +bolt, +lto, +mlgo, based on r510928) clang version 18.0.0 (https://android.googlesource.com/toolchain/llvm-project 477610d4d0d988e69dbc3fae4fe86bff3f07f2b5), LLD 18.0.0) #1 SMP PREEMPT Mon Dec  8 04:00:43 UTC 2025
+--- /proc/config.gz ---
+已导出 /data/local/tmp/opairdrop-config.txt
+
+===== 3. 关键模块（/proc/modules） =====
+qca_cld3_peach_v2 12349440 0 - Live 0x0000000000000000 (O)
+cfg80211 1146880 2 qca_cld3_peach_v2,mac80211, Live 0x0000000000000000
+mac80211 1093632 0 - Live 0x0000000000000000
+cnss2 425984 1 qca_cld3_peach_v2, Live 0x0000000000000000 (O)
+cnss_utils 28672 3 qca_cld3_peach_v2,cnss2,btpower, Live 0x0000000000000000 (O)
+cnss_nl 24576 1 qca_cld3_peach_v2, Live 0x0000000000000000 (O)
+cnss_prealloc 20480 2 qca_cld3_peach_v2,cnss2, Live 0x0000000000000000 (O)
+ipam 4452352 24 qca_cld3_peach_v2,rmnet_core,ipanetm,rmnet_ctl, Live 0x0000000000000000 (O)
+qcom_iommu_util 81920 9 qca_cld3_peach_v2,msm_drm,ipam,coresight_tmc,camera,msm_kgsl,cnss2,qcom_iommu_debug,arm_smmu,[permanent], Live 0x0000000000000000
+--- 前 60 行 ----
+pathmask 61440 0 - Live 0x0000000000000000 (O)
+hybridmount 53248 0 - Live 0x0000000000000000 (O)
+camera_extension 573440 0 - Live 0x0000000000000000 (O)
+qca_cld3_peach_v2 12349440 0 - Live 0x0000000000000000 (O)
+rmnet_wlan 53248 0 - Live 0x0000000000000000 (O)
+rmnet_aps 36864 0 - Live 0x0000000000000000 (O)
+rmnet_offload 28672 0 - Live 0x0000000000000000 (O)
+rmnet_perf_tether 20480 0 - Live 0x0000000000000000 (O)
+rmnet_shs 192512 0 - Live 0x0000000000000000 (O)
+rmnet_perf 57344 0 - Live 0x0000000000000000 (O)
+rmnet_core 294912 7 rmnet_wlan,rmnet_aps,rmnet_offload,rmnet_perf_tether,rmnet_shs,rmnet_perf, Live 0x0000000000000000 (O)
+ipanetm 12288 0 - Live 0x0000000000000000 (O)
+rmnet_ctl 20480 1 rmnet_core, Live 0x0000000000000000 (O)
+msm_drm 4087808 34 - Live 0x0000000000000000 (O)
+machine_dlkm 139264 0 - Live 0x0000000000000000 (O)
+swr_dmic_dlkm 24576 0 - Live 0x0000000000000000 (O)
+ipam 4452352 24 qca_cld3_peach_v2,rmnet_core,ipanetm,rmnet_ctl, Live 0x0000000000000000 (O)
+wcd9378_dlkm 446464 1 machine_dlkm, Live 0x0000000000000000 (O)
+wcd939x_dlkm 229376 3 machine_dlkm,swr_dmic_dlkm, Live 0x0000000000000000 (O)
+wcd938x_dlkm 151552 0 - Live 0x0000000000000000 (O)
+oplus_bsp_geas_system 40960 0 - Live 0x0000000000000000 (O)
+coresight_tmc 73728 0 - Live 0x0000000000000000
+camera 5517312 43 camera_extension, Live 0x0000000000000000 (O)
+usb_f_qdss 28672 7 coresight_tmc, Live 0x0000000000000000
+audio_pkt_dlkm 24576 2 - Live 0x0000000000000000 (O)
+usb_f_gsi 69632 9 ipam, Live 0x0000000000000000
+lpass_cdc_wsa2_macro_dlkm 135168 0 - Live 0x0000000000000000 (O)
+mbhc_dlkm 73728 3 wcd9378_dlkm,wcd939x_dlkm,wcd938x_dlkm, Live 0x0000000000000000 (O)
+lpass_bt_swr_dlkm 20480 0 - Live 0x0000000000000000 (O)
+lpass_cdc_wsa_macro_dlkm 135168 0 - Live 0x0000000000000000 (O)
+lpass_cdc_rx_macro_dlkm 139264 1 machine_dlkm, Live 0x0000000000000000 (O)
+lpass_cdc_va_macro_dlkm 73728 0 - Live 0x0000000000000000 (O)
+wcd9xxx_dlkm 36864 29 wcd9378_dlkm,wcd939x_dlkm,wcd938x_dlkm, Live 0x0000000000000000 (O)
+audpkt_ion_dlkm 24576 2 audio_pkt_dlkm, Live 0x0000000000000000 (O)
+audio_prm_dlkm 20480 2 machine_dlkm,wcd9xxx_dlkm, Live 0x0000000000000000 (O)
+swr_ctrl_dlkm 81920 5 lpass_cdc_wsa2_macro_dlkm,lpass_bt_swr_dlkm,lpass_cdc_wsa_macro_dlkm,lpass_cdc_rx_macro_dlkm,lpass_cdc_va_macro_dlkm, Live 0x0000000000000000 (O)
+lpass_cdc_tx_macro_dlkm 90112 0 - Live 0x0000000000000000 (O)
+oplus_audio_daemon 24576 7 machine_dlkm,wcd9378_dlkm,wcd939x_dlkm,audio_pkt_dlkm,audpkt_ion_dlkm,audio_prm_dlkm,swr_ctrl_dlkm, Live 0x0000000000000000 (O)
+dwc3_msm 106496 4 msm_drm,usb_f_qdss,usb_f_gsi, Live 0x0000000000000000
+spcom 69632 0 - Live 0x0000000000000000 (O)
+qcom_hv_haptics 139264 3 - Live 0x0000000000000000
+swr_haptics_dlkm 28672 1 - Live 0x0000000000000000 (O)
+spss_utils 36864 0 - Live 0x0000000000000000 (O)
+pinctrl_lpi_dlkm 32768 11 - Live 0x0000000000000000 (O)
+lpass_cdc_dlkm 77824 7 machine_dlkm,lpass_cdc_wsa2_macro_dlkm,lpass_cdc_wsa_macro_dlkm,lpass_cdc_rx_macro_dlkm,lpass_cdc_va_macro_dlkm,lpass_cdc_tx_macro_dlkm, Live 0x0000000000000000 (O)
+adsp_loader_dlkm 24576 4 machine_dlkm,mbhc_dlkm,swr_ctrl_dlkm,oplus_audio_daemon, Live 0x0000000000000000 (O)
+leds_qti_flash 32768 1 camera, Live 0x0000000000000000
+fsa4480_i2c 24576 3 msm_drm,machine_dlkm,mbhc_dlkm, Live 0x0000000000000000
+wcd_usbss_i2c 57344 5 msm_drm,machine_dlkm,wcd939x_dlkm,mbhc_dlkm,dwc3_msm, Live 0x0000000000000000
+oplus_chg_v2 4702208 5 qcom_hv_haptics,swr_haptics_dlkm,fsa4480_i2c,leds_qti_flash,wcd_usbss_i2c, Live 0x0000000000000000
+msm_eva 466944 0 - Live 0x0000000000000000 (O)
+goodix_ts 159744 0 - Live 0x0000000000000000 (O)
+spf_core_dlkm 20480 8 machine_dlkm,audio_pkt_dlkm,lpass_bt_swr_dlkm,audio_prm_dlkm,swr_ctrl_dlkm,adsp_loader_dlkm,lpass_cdc_dlkm,pinctrl_lpi_dlkm, Live 0x0000000000000000 (O)
+msm_kgsl 1875968 20 oplus_bsp_geas_system, Live 0x0000000000000000 (O)
+qcom_spss 28672 1 spss_utils, Live 0x0000000000000000
+st_fts 229376 0 - Live 0x0000000000000000 (O)
+oplus_wireless_pen 57344 0 - Live 0x0000000000000000
+qrtr_mhi 16384 0 - Live 0x0000000000000000
+focaltech_fts 90112 0 - Live 0x0000000000000000 (O)
+oplus_bsp_tp_ft3518 90112 0 - Live 0x0000000000000000 (O)
+
+===== 4. 厂商模块文件 =====
+-rw-r--r-- 1 root root  2071200 2026-03-05 13:37 cfg80211.ko
+-rw-r--r-- 1 root root   940512 2026-03-05 14:05 cnss2.ko
+-rw-r--r-- 1 root root    16152 2026-03-05 14:02 cnss_nl.ko
+-rw-r--r-- 1 root root    49896 2026-03-05 14:02 cnss_plat_ipc_qmi_svc.ko
+-rw-r--r-- 1 root root    25328 2026-03-05 14:02 cnss_prealloc.ko
+-rw-r--r-- 1 root root    34704 2026-03-05 14:02 cnss_utils.ko
+-rw-r--r-- 1 root root   567536 2026-03-05 14:02 icnss2.ko
+-rw-r--r-- 1 root root  6152456 2026-03-05 13:49 ipam.ko
+-rw-r--r-- 1 root root  1963624 2026-03-05 13:37 mac80211.ko
+-rw-r--r-- 1 root root 19499096 2026-03-05 14:11 qca_cld3_kiwi_v2.ko
+-rw-r--r-- 1 root root 20060656 2026-03-05 14:11 qca_cld3_peach.ko
+-rw-r--r-- 1 root root 19718520 2026-03-05 14:11 qca_cld3_peach_v2.ko
+-rw-r--r-- 1 root root    78832 2026-03-05 14:05 radio-i2c-rtc6226-qca.ko
+--- 目录是否存在 ---
+dir OK: /vendor/lib/modules
+dir OK: /system/lib/modules
+
+===== 5. 已加载模块 build-id =====
+NOTE_cfg80211=040000001400000003000000474e5500979d81c802c7607fafdd5b5b3496219669c73d5f
+NOTE_cnss2=040000001400000003000000474e55002ea3eebc9983763be68b3791c458e3a377a8fd7f
+NOTE_cnss_nl=040000001400000003000000474e5500fb4ac3a456845352c1a57902fd14774e6d3094d2
+NOTE_cnss_plat_ipc_qmi_svc=040000001400000003000000474e55001ec0c3fcf6f0a16242c97163dafefff6470702fc
+NOTE_cnss_prealloc=040000001400000003000000474e5500f443592db2727056ec0b1033c660930dabfa3e91
+NOTE_cnss_utils=040000001400000003000000474e5500ad2d0702ee437493d47498bddde36bec0ff996a1
+NOTE_mac80211=040000001400000003000000474e5500fa8e9ada853c91c63d142e066688a9d8fad94df5
+NOTE_qca_cld3_peach_v2=040000001400000003000000474e5500e7c28df360d5bc014c6505fc680e0369765a5b2a
+
+===== 6. WLAN HAL / 服务 =====
+[init.svc.cnss-daemon]: [running]
+[init.svc.enablewifidump]: [stopped]
+[init.svc.oplus_wifi_aidl_service]: [running]
+[init.svc.vendor.wifi_hal_legacy]: [running]
+[init.svc.wificond]: [running]
+[init.svc.wifidisplayhalservice]: [running]
+[init.svc.wifidriverlog_on]: [stopped]
+[init.svc.wifisar]: [stopped]
+[init.svc.wifiserver]: [stopped]
+--- dumpsys wifi（前 40 行）---
+Verbose logging is off
+mVerboseLoggingLevel 0
+Stay-awake conditions: 0
+mInIdleMode false
+mScanPending false
+SupportedFeatures: [WIFI_FEATURE_INFRA, WIFI_FEATURE_PASSPOINT, WIFI_FEATURE_P2P, WIFI_FEATURE_MOBILE_HOTSPOT, WIFI_FEATURE_AWARE, WIFI_FEATURE_PNO, WIFI_FEATURE_TDLS, WIFI_FEATURE_TDLS_OFFCHANNEL, WIFI_FEATURE_AP_STA, WIFI_FEATURE_LINK_LAYER_STATS, WIFI_FEATURE_RSSI_MONITOR, WIFI_FEATURE_CONFIG_NDO, WIFI_FEATURE_CONTROL_ROAMING, WIFI_FEATURE_TX_POWER_LIMIT, WIFI_FEATURE_WPA3_SAE, WIFI_FEATURE_WPA3_SUITE_B, WIFI_FEATURE_OWE, WIFI_FEATURE_LOW_LATENCY, WIFI_FEATURE_DPP, WIFI_FEATURE_CONNECTED_RAND_MAC, WIFI_FEATURE_AP_RAND_MAC, WIFI_FEATURE_MBO, WIFI_FEATURE_OCE, WIFI_FEATURE_WAPI, WIFI_FEATURE_FILS_SHA256, WIFI_FEATURE_FILS_SHA384, WIFI_FEATURE_SAE_PK, WIFI_FEATURE_ADDITIONAL_STA_RESTRICTED, WIFI_FEATURE_DPP_ENROLLEE_RESPONDER, WIFI_FEATURE_PASSPOINT_TERMS_AND_CONDITIONS, WIFI_FEATURE_SAE_H2E, WIFI_FEATURE_WFD_R2, WIFI_FEATURE_DECORATED_IDENTITY, WIFI_FEATURE_TRUST_ON_FIRST_USE, WIFI_FEATURE_ADDITIONAL_STA_MULTI_INTERNET, WIFI_FEATURE_SET_TLS_MINIMUM_VERSION, WIFI_FEATURE_TLS_V1_3, WIFI_FEATURE_DUAL_BAND_SIMULTANEOUS, WIFI_FEATURE_WEP, WIFI_FEATURE_WPA_PERSONAL, WIFI_FEATURE_AGGRESSIVE_ROAMING_MODE_SUPPORT, WIFI_FEATURE_D2D_WHEN_INFRA_STA_DISABLED]
+SettingsStore:
+WifiState 1
+AirplaneModeOn false
+ScanAlwaysAvailable true
+WifiScoringState true
+WifiPasspointState true
+WifiMultiInternetMode 2
+WifiStateApm false
+WifiStateBt false
+WifiStateUser 0
+AirplaneModeEnhancementEnabled true
+SatelliteModeOn false
+Dump of WifiActiveModeWarden
+Current wifi mode: EnabledState
+Wi-Fi is enabled
+NumActiveModeManagers: 1
+mIsMultiplePrimaryBugreportTaken: false
+WifiController:
+ total records=15
+ rec[0]: time=11-11 14:37:35.097 processed=DefaultState org=EnabledState dest=<null> what=CMD_UPDATE_AP_CAPABILITY 1 0 num ClientModeManagers:1 num SoftApManagers:0 SupportedFeatures=3839 MaximumSupportedClientNumber=32 SupportedChannelListIn24g[] SupportedChannelListIn5g[] SupportedChannelListIn6g[] SupportedChannelListIn60g[] mCountryCodeFromDrivernull
+ rec[1]: time=11-11 14:37:35.151 processed=DefaultState org=EnabledState dest=<null> what=CMD_UPDATE_AP_CAPABILITY 1 0 num ClientModeManagers:1 num SoftApManagers:0 SupportedFeatures=3839 MaximumSupportedClientNumber=32 SupportedChannelListIn24g[] SupportedChannelListIn5g[] SupportedChannelListIn6g[] SupportedChannelListIn60g[] mCountryCodeFromDrivernull
+ rec[2]: time=11-11 14:37:35.250 processed=DefaultState org=EnabledState dest=<null> what=CMD_UPDATE_AP_CAPABILITY 1 0 num ClientModeManagers:1 num SoftApManagers:0 SupportedFeatures=3839 MaximumSupportedClientNumber=32 SupportedChannelListIn24g[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] SupportedChannelListIn5g[36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165] SupportedChannelListIn6g[] SupportedChannelListIn60g[] mCountryCodeFromDriverHK
+ rec[3]: time=11-11 14:37:35.250 processed=DefaultState org=EnabledState dest=<null> what=CMD_UPDATE_AP_CAPABILITY 2 0 num ClientModeManagers:1 num SoftApManagers:0 SupportedFeatures=3839 MaximumSupportedClientNumber=32 SupportedChannelListIn24g[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] SupportedChannelListIn5g[36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165] SupportedChannelListIn6g[] SupportedChannelListIn60g[] mCountryCodeFromDriverHK
+ rec[4]: time=11-11 14:37:35.271 processed=DefaultState org=EnabledState dest=<null> what=CMD_UPDATE_AP_CONFIG 0 0 num ClientModeManagers:1 num SoftApManagers:0 ssid = "realme GT 7 Pro <redacted>" 
+ Passphrase = <non-empty> 
+ HiddenSsid = false 
+ Channels = {1=0} 
+ SecurityType = 2 
+ MaxClient = 10 
+ AutoShutdownEnabled = true 
+ ShutdownTimeoutMillis = -1 
+ ClientControlByUser = false 
+ BlockedClientList = [] 
+ AllowedClientList= [] 
+
+===== 7. WLAN 固件与驱动线索 =====
+total 16636
+-rw-r--r-- 1 root root     724 2026-03-05 12:17 CAMERA_ICP.b00
+-rw-r--r-- 1 root root     412 2026-03-05 12:17 CAMERA_ICP.b01
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP.b02
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP.b03
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP.b04
+-rw-r--r-- 1 root root      12 2026-03-05 12:17 CAMERA_ICP.b05
+-rw-r--r-- 1 root root      24 2026-03-05 12:17 CAMERA_ICP.b06
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP.b07
+-rw-r--r-- 1 root root  473684 2026-03-05 12:17 CAMERA_ICP.b08
+-rw-r--r-- 1 root root   31280 2026-03-05 12:17 CAMERA_ICP.b09
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b10
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b11
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b12
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b13
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b14
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b15
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b16
+-rw-r--r-- 1 root root   32720 2026-03-05 12:17 CAMERA_ICP.b17
+-rw-r--r-- 1 root root   25552 2026-03-05 12:17 CAMERA_ICP.b18
+-rw-r--r-- 1 root root       0 2026-03-05 12:17 CAMERA_ICP.b19
+-rw-r--r-- 1 root root    4760 2026-03-05 12:17 CAMERA_ICP.b20
+-rw-r--r-- 1 root root 3036780 2026-03-05 12:17 CAMERA_ICP.elf
+-rw-r--r-- 1 root root  574104 2026-03-05 12:17 CAMERA_ICP.mbn
+-rw-r--r-- 1 root root    5484 2026-03-05 12:17 CAMERA_ICP.mdt
+-rw-r--r-- 1 root root     724 2026-03-05 12:17 CAMERA_ICP_1.b00
+-rw-r--r-- 1 root root     412 2026-03-05 12:17 CAMERA_ICP_1.b01
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP_1.b02
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP_1.b03
+-rw-r--r-- 1 root root       8 2026-03-05 12:17 CAMERA_ICP_1.b04
+[gsm.ims.type0]: [vowifi]
+[gsm.network.type]: [IWLAN,LTE]
+[init.svc.WifibdfVersion]: [stopped]
+[init.svc.cnss-daemon]: [running]
+[init.svc.enablewifidump]: [stopped]
+[init.svc.oplus_wifi_aidl_service]: [running]
+[init.svc.rusWifiPreBootCheck]: [stopped]
+[init.svc.vendor.wifi_hal_legacy]: [running]
+[init.svc.wificond]: [running]
+[init.svc.wifidisplayhalservice]: [running]
+[init.svc.wifidriverlog_on]: [stopped]
+[init.svc.wifisar]: [stopped]
+[init.svc.wifiserver]: [stopped]
+[init.svc_debug_pid.WifibdfVersion]: []
+[init.svc_debug_pid.cnss-daemon]: [3093]
+[init.svc_debug_pid.enablewifidump]: []
+[init.svc_debug_pid.oplus_wifi_aidl_service]: [2187]
+[init.svc_debug_pid.rusWifiPreBootCheck]: []
+[init.svc_debug_pid.vendor.wifi_hal_legacy]: [1993]
+[init.svc_debug_pid.wificond]: [2676]
+[init.svc_debug_pid.wifidisplayhalservice]: [2728]
+[init.svc_debug_pid.wifidriverlog_on]: []
+[init.svc_debug_pid.wifisar]: []
+[init.svc_debug_pid.wifiserver]: []
+[persist.data.df.iwlan_mux]: [9]
+[persist.sys.oplus.wifi.atpc.backup_txpower]: [8]
+[persist.sys.oplus.wifi.fulldump.enable]: [1]
+[persist.sys.oplus.wifi.lastestEnable.time]: [1794379054473]
+[persist.sys.oplus.wifi.latestDisable.time]: [1794378297796]
+[persist.sys.oplus.wifi.latestEnableFail.time]: [0]
+[persist.sys.oplus.wifi.sla.game_high_temperature]: [50]
+[persist.sys.oplus.wifimodemswitch]: [0]
+[persist.sys.oplus.wlan.atpc.qcom_use_iw]: [true]
+[persist.sys.wifi.channel.version]: [38]
+[ro.boot.vendor.qspa.wlan]: [enabled]
+[ro.boot.wificountrycode]: [CN]
+[ro.boottime.WifibdfVersion]: [6676283954]
+[ro.boottime.cnss-daemon]: [6650019527]
+[ro.boottime.enablewifidump]: [14416896243]
+[ro.boottime.oplus_wifi_aidl_service]: [5791013329]
+[ro.boottime.rusWifiPreBootCheck]: [6728303798]
+[ro.boottime.vendor.wifi_hal_legacy]: [5629004111]
+[ro.boottime.wificond]: [6434373746]
+[ro.boottime.wifidisplayhalservice]: [6480396766]
+[ro.boottime.wifisar]: [22821049260]
+[ro.boottime.wifiserver]: [5857524423]
+[ro.oplus.wifi.llm.media_boost]: [true]
+[ro.oplus.wifi.minidump.enable.state]: [1]
+[ro.oplus.wifi.service.test.enable]: [false]
+[ro.oplus.wifi.ull.tx_bw20]: [true]
+[ro.oplus.wifi.vbat.backoff.power]: [18]
+[ro.oplus.wifi.wsa]: [StbcMrc]
+[ro.oplus.wifi.wsa.disMrc]: [true]
+[ro.product.oplus.wlan.ko]: [/vendor/lib/modules/qca_cld3_wlan.ko]
+[ro.vendor.oplus.wifi.bdfver]: [123456789]
+[ro.vendor.oplus.wifi.wsa]: [StbcMrc]
+[ro.wifi.channels]: []
+[sys.oplus.production.wifi.ota]: [false]
+[sys.oplus.wifi.btc_mode]: [TDD]
+[sys.oplus.wifi.dump.enable]: [1]
+[sys.oplus.wifi.dump.needupload]: [1]
+[sys.oplus.wlan.sar_idx]: [11110000001000011:0:4]
+[sys.wifitracing.started]: [1]
+[vendor.oplus.sap.interface]: [wlan2]
+[vendor.wlan.driver.version]: [5.2.1.119O]
+[wifi.active.interface]: [wlan0]
+[wifi.aware.interface]: [wifi-aware0]
+[wifi.interface]: [wlan0]
+[wlan.driver.status]: [ok]
+
+===== 8. 关键 App =====
+--- com.google.android.mosey ---
+--- com.coloros.oshare ---
+package:/product/priv-app/OShare/OShare.apk
+package:com.coloros.oshare
+--- com.oplus.oshare ---
+--- Mosey 版本 ---
+--- Mosey 全部分包 sha256 ---
+--- OShare 版本 ---
+    codePath=/product/priv-app/OShare
+    versionCode=160460 minSdk=30 targetSdk=35
+    versionName=16.4.60
+
+===== 9. OShare 组件 =====
+        b5ce9e1 com.coloros.oshare/com.oplus.oshare.ui.IOSShareActivity filter ad85306
+        b5ce9e1 com.coloros.oshare/com.oplus.oshare.ui.IOSShareActivity filter ad85306
+      com.oplus.oshare.action.DEVICE_LIST:
+        7103ebf com.coloros.oshare/com.oplus.oshare.ui.ShareActivity filter bc3198c
+          Action: "com.oplus.oshare.action.DEVICE_LIST"
+        3560f63 com.coloros.oshare/com.oplus.oshare.ui.SecurityCheckActivity filter de6e760
+        a0ff419 com.coloros.oshare/com.oplus.oshare.ui.JumpCheckActivity filter 980bcde
+        40b5dc7 com.coloros.oshare/com.oplus.oshare.ui.HelpActivity filter e53bff4
+          Action: "oplus.intent.action.OSHARE_SETTINGS_PREFERENCES"
+        40b5dc7 com.coloros.oshare/com.oplus.oshare.ui.HelpActivity filter e53bff4
+          Action: "oplus.intent.action.OSHARE_SETTINGS_PREFERENCES"
+        40b5dc7 com.coloros.oshare/com.oplus.oshare.ui.HelpActivity filter e53bff4
+          Action: "oplus.intent.action.OSHARE_SETTINGS_PREFERENCES"
+        8dd431d com.coloros.oshare/com.oplus.oshare.ui.ReceiveDialogActivity filter 6169992
+        40b5dc7 com.coloros.oshare/com.oplus.oshare.ui.HelpActivity filter e53bff4
+
+===== 10. Root / LSPosed =====
+exists: /data/adb/ksud
+exists: /data/adb/modules
+exists: /data/adb/lspd
+package:com.coloros.oshare
+
+===== 11. 日志线索 =====
+[  861.874367] [soft_i][0x3dfb064ac][06:51:39.001765] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  861.874402] [soft_i][0x3dfb06753][06:51:39.001800] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  868.837217] [soft_i][0x3e7a84a46][06:51:45.964613] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  868.837288] [soft_i][0x3e7a84fb6][06:51:45.964685] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  868.837335] [soft_i][0x3e7a8533d][06:51:45.964733] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  871.909465] [soft_i][0x3eb2c5cdc][06:51:49.036861] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  871.909559] [soft_i][0x3eb2c640b][06:51:49.036957] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  871.909605] [soft_i][0x3eb2c678e][06:51:49.037003] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  872.830721] [soft_i][0x3ec3a4302][06:51:49.958116] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  872.830832] [soft_i][0x3ec3a4b7b][06:51:49.958229] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  872.830875] [soft_i][0x3ec3a4ec0][06:51:49.958273] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  874.878704] [soft_i][0x3ee9241c6][06:51:52.006100] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  874.878783] [soft_i][0x3ee9247ca][06:51:52.006180] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  874.878829] [soft_i][0x3ee924b51][06:51:52.006227] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  875.902512] [soft_i][0x3efbe3368][06:51:53.029908] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  875.902617] [soft_i][0x3efbe3b5a][06:51:53.030014] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  875.902660] [soft_i][0x3efbe3ea6][06:51:53.030058] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  878.872317] [soft_i][0x3f32442ba][06:51:55.999712] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  878.872391] [soft_i][0x3f324486f][06:51:55.999788] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  878.872437] [soft_i][0x3f3244bed][06:51:55.999835] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  879.898023] [soft_i][0x3f450c2b2][06:51:57.025419] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  879.898165] [soft_i][0x3f450cd71][06:51:57.025562] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  879.898210] [soft_i][0x3f450d0e2][06:51:57.025608] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  880.920793] [soft_i][0x3f57c666e][06:51:58.048188] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  880.920898] [soft_i][0x3f57c6e7c][06:51:58.048296] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  880.920963] [soft_i][0x3f57c7362][06:51:58.048361] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  882.865862] [soft_i][0x3f7b63e97][06:51:59.993257] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  882.865984] [soft_i][0x3f7b647e1][06:51:59.993381] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  882.866026] [soft_i][0x3f7b64b20][06:51:59.993424] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  884.092073] [soft_i][0x3f91d7c69][06:52:01.219468] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  884.092140] [soft_i][0x3f91d819c][06:52:01.219537] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  884.092187] [soft_i][0x3f91d8529][06:52:01.219585] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  884.913800] [soft_i][0x3fa0e39ff][06:52:02.041196] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  884.913879] [soft_i][0x3fa0e3fff][06:52:02.041276] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  884.913924] [soft_i][0x3fa0e437a][06:52:02.041322] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  887.985249] [soft_i][0x3fd9210a4][06:52:05.112645] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  887.985346] [soft_i][0x3fd921814][06:52:05.112744] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  887.985410] [soft_i][0x3fd921cdd][06:52:05.112807] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  891.979617] [soft_i][0x402244a34][06:52:09.107012] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  891.979748] [soft_i][0x402245433][06:52:09.107145] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  891.979809] [soft_i][0x4022458d7][06:52:09.107207] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  893.924858] [soft_i][0x4045e2dae][06:52:11.052232] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  893.924964] [soft_i][0x4045e3768][06:52:11.052361] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  893.925006] [soft_i][0x4045e3a9a][06:52:11.052404] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  894.955302] [soft_i][0x4058c12bb][06:52:12.082699] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  894.955361] [soft_i][0x4058c1735][06:52:12.082759] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  894.955406] [soft_i][0x4058c1a8e][06:52:12.082803] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  895.973873] [soft_i][0x406b67b78][06:52:13.101269] peach_v2: [0:I:WMA] WLAN triggered wakeup: ACTION_FRAME_RECV (38), vdev: 0 (STA)
+[  895.973981] [soft_i][0x406b683a9][06:52:13.101378] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  895.974028] [soft_i][0x406b6873c][06:52:13.101426] peach_v2: [0:I:WMA] wma_wow_stats_display: WLAN wake reason counters:
+[  695.015990] type=1400 audit(1794379732.138:921): avc:  granted  { execute } for  comm="thread_sp_file_" path="/data/data/com.tencent.tim/files/ZRes/online/ad6b501b0e/1/res/tencent-avif-v2/214/tencent-avif-v2_214.res" dev="dm-73" ino=38282 scontext=u:r:untrusted_app_30:s0:c153,c257,c512,c768 tcontext=u:object_r:app_data_file:s0:c153,c257,c512,c768 tclass=file app=com.tencent.tim
+[  714.565861] type=1400 audit(1794379751.690:922): avc:  granted  { execute } for  comm="Thread-12" path="/data/data/com.eg.android.AlipayGphone/app_plugins_lib/libmaipython-v21.so" dev="dm-73" ino=226984 scontext=u:r:untrusted_app:s0:c131,c257,c512,c768 tcontext=u:object_r:app_data_file:s0:c131,c257,c512,c768 tclass=file app=com.eg.android.AlipayGphone
+
+===== 12. 工具可用性 =====
+insmod -> /system/bin/insmod
+rmmod -> /system/bin/rmmod
+lsmod -> /system/bin/lsmod
+dmesg -> /system/bin/dmesg
+readelf -> /system/bin/readelf
+toybox -> /system/bin/toybox
+
+DONE
