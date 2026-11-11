@@ -178,5 +178,5 @@ AIRDROP_RESIDENT_READY_UI_GATED
 
 **尚未验证**：AirDrop 实际收发（需要打开 Quick Share / OShare 分享面板触发 provider 与 AWDL 会话）。
 
-产物：`OPAirDrop-v1.0.31-RMX5010-r3.zip`，SHA256 `266707d4b85ba65d62a795fc4ef9e73cba21ff6d333481957e1e232c62b62319`。
+产物：`OPAirDrop-v1.0.31-RMX5010-r3.zip`，SHA256 `cdee18f6ab6833cb107e963e37cff4dc74cfd9b6dd3278d358e02fe4061fe425`。
 旧版（r2）快照见 `old/2026-11-11-r2/`。
