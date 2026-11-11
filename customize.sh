@@ -3,8 +3,9 @@ ui_print "- OPAirDrop v$(sed -n 's/^version=//p' "$MODPATH/module.prop")：为�
 # RMX5010 port: device/kernel gates removed after manual verification
 # (realme / sun / 6.6.89-android15-8-...-4k, provider+qca+mac80211+wonder verified).
 sh "$MODPATH/bin/verify.sh" "$MODPATH" >/dev/null || abort 'Payload integrity check failed'
-# Replacement must not merge obsolete split APKs from the earlier module.
-REPLACE="/system/system_ext/priv-app/MoseyApp"
+# Mosey comes from the ROM, a dedicated Mosey module (/system/app) or a user
+# install; this module only patches the active base APK in place, so it does
+# not ship or replace MoseyApp.
 for item in "$MODPATH"/*;do
     [ "$item" != "$MODPATH/webroot" ] || continue
     if [ -d "$item" ];then set_perm_recursive "$item" 0 0 0755 0644

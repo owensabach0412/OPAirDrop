@@ -31,13 +31,19 @@
 - 真实换入：`provider → qca（带 passthru 参数）→ mac80211 → wonder` 全部 `rc=0`；固件 `10097fff`；`OP13NAN: nan_data=1`；98 个 AWDL 参数；Wi-Fi 正常；回滚原厂成功。
 - 唯一注意点：**必须先装 `oneplus13_wonder_provider.ko` 再装 qca**，否则 `Unknown symbol cnss_set_vendor_wonder_priv_data`（realme 原厂 CNSS 不导出该符号）。
 
-**用户态：尚未验证（已知缺口）。**
+**用户态：栈已起来，AirDrop 实收待验证。**
 
-- ROM 没有 `com.google.android.mosey`，模块自带的 MoseyApp（60715，minSdk 36）依赖重启后由系统扫描 `/system_ext/priv-app/MoseyApp` 安装；
-- realme 的 OShare 16.4.60 **没有** `com.oplus.oshare.OShareServer`，`bin/receive-session.sh` 的后台接收路径预计失败，需要改服务名或做桥接适配；
-- 手动测试中 `wonder0` 未创建，需按完整模块流程复查。
+r3 起 Mosey 使用设备现有来源（独立的 `com.google.android.mosey` KernelSU 模块放在 `/system/app`，或用户安装），本模块不再自带 `/system_ext/priv-app/MoseyApp`，只对 `pm path` 得到的 active base 做 bind mount 补丁。
 
-详细过程见 [`rmx5010/analysis.md`](rmx5010/analysis.md)。
+真机启动链（重启后自动）：
+
+```
+DRIVER_SWAP_DONE -> NATIVE_BINDER_READY -> PATCH_AUTH_READY -> COEX_READY
+-> RECEIVE_WARMUP_BEGIN -> PROVIDER_START_DONE
+control.sh status: stack=stage44_coexist_owned, Binder service found, Wi-Fi connected
+```
+
+仍需验证：打开 Quick Share / OShare 分享面板后，Mac/iPhone 能否发现并完成收发（provider 由 GMS/分享界面拉起，模块不再从后台强拉）。
 
 ## 安装
 

@@ -140,3 +140,43 @@ rmx5010/
 **产物**：`OPAirDrop-v1.0.31-RMX5010-r2.zip`，SHA256 `8b8147402b703e01fc452cc79718ce888d62334390b0e9fa52590d673cf4f5fd`。
 
 旧版（r1）模块快照保存在仓库的 `old/2026-11-11-r1/`。
+
+
+---
+
+## 8. r3 变更（2026-11-11 晚）：改用 A 方案（Mosey 用设备现有来源）
+
+真机测试发现 opairshare 自带 `/system_ext/priv-app/MoseyApp` 在 realme 上跑不通：
+
+- app 进程的 mount namespace 看不到 `/system_ext/priv-app/MoseyApp/base.apk` → `Failed to open APK` → 进程崩溃；
+- GMS 不发布 `com.google.android.mosey` 模块行（只有 `NearbySharingService / qs_v1`）→ 原 auth 检查必失败；
+- root 从后台 `am startservice` 拉 `ExternalSharingService` 被平台拒绝（`Unable to start service ... not found`）；
+- SDK 36 没有 `android.permission.ACCESS_LOCAL_NETWORK`，原 `grant-permissions.sh` 会直接 `exit 3`。
+
+**采用方案 A**：Mosey 由设备上已有的 `com.google.android.mosey` KSU 模块（`/system/app`）或用户安装提供，opairshare 只负责驱动与 APK 补丁。
+
+| 文件 | 变更 |
+| --- | --- |
+| `customize.sh` | 删除 `REPLACE=/system/system_ext/priv-app/MoseyApp`；不再自带 MoseyApp |
+| `bin/callback.sh` | `SYSTEM_APK` 改为 `pm path` 得到的 active base，只挂载一个路径 |
+| `bin/callback-bootstrap.sh` | 增加 realme 证据（`NearbySharingService` + `qs_v1`）；该路径下不再强拉 provider |
+| `bin/grant-permissions.sh` | best-effort，未知权限跳过 |
+
+**实测结果（未重启、手动 `control.sh start`）**：
+
+```
+DRIVER_SWAP_DONE → NATIVE_BINDER_READY → AUTH_BEGIN
+CALLBACK_AUTH_NO_GMS_EVIDENCE: patching the installed base only
+MOSEY_60715_BASE_VERIFIED original splits=13
+MOSEY_60715_BASE_VERIFIED patched splits=13
+CALLBACK_PATCH_READY r3
+CALLBACK_AUTH_PRIMED evidence=none
+AIRDROP_RESIDENT_READY_UI_GATED
+```
+
+栈状态：`wonder` / `mac80211` / `qca_cld3_peach_v2` / `oneplus13_wonder_provider` 全部加载；117 个驱动参数（98 个 AWDL）；`mosey_server` 运行；`control.sh status` → `stack=stage44_coexist_owned`、Binder service found、Wi-Fi 已连上 5 GHz。
+
+**尚未验证**：AirDrop 实际收发（需要打开 Quick Share / OShare 分享面板触发 provider 与 AWDL 会话）。
+
+产物：`OPAirDrop-v1.0.31-RMX5010-r3.zip`，SHA256 `266707d4b85ba65d62a795fc4ef9e73cba21ff6d333481957e1e232c62b62319`。
+旧版（r2）快照见 `old/2026-11-11-r2/`。

@@ -1,10 +1,14 @@
 #!/system/bin/sh
-# Late APK mounts: original signed APKs remain available during package scanning.
+# Late APK mount: bind the patched Mosey base over the active base APK.
+#
+# The active APK may live in /data/app (user install) or in a system module
+# (/system/app, /system_ext, ...). This device keeps Mosey in /system/app, so
+# there is no fixed /system_ext/priv-app/MoseyApp copy to patch: every mount is
+# resolved from `pm path` at runtime.
 set -eu
 MODDIR=$(CDPATH= cd -- "${0%/*}/.." && pwd)
 . "$MODDIR/bin/common.sh"
 CB="$STATE/callback"
-SYSTEM_APK=/system_ext/priv-app/MoseyApp/base.apk
 BB=/data/adb/ksu/bin/busybox
 die() { echo "Callback patch: $*" >&2; exit 3; }
 digest() { sha256sum "$1" | awk '{print $1}'; }
@@ -36,16 +40,14 @@ owned() {
 }
 restore_owned() {
     same_boot "$CB/boot" || return 0
-    for pair in "system:$SYSTEM_APK" "active:$(cat "$CB/active-path")"; do
-        kind=${pair%%:*}; target=${pair#*:}
-        [ "$kind" != active ] || [ "$target" != "$SYSTEM_APK" ] || continue
-        if owned "$target" "/adb/opairshare/callback/$kind.apk"; then
-            umount "$target" || "$BB" umount -l "$target"
-            [ "$(digest "$target")" = "$original" ] || die 'original APK view did not return'
-        elif [ "$(digest "$target")" != "$original" ]; then
-            die "unowned APK view at $target; leave it intact"
-        fi
-    done
+    target=$(cat "$CB/active-path" 2>/dev/null || true)
+    [ -n "$target" ] || { rm -f "$CB/boot" "$CB/active-path"; return 0; }
+    if owned "$target" /adb/opairshare/callback/active.apk; then
+        umount "$target" || "$BB" umount -l "$target"
+        [ "$(digest "$target")" = "$original" ] || die 'original APK view did not return'
+    elif [ "$(digest "$target")" != "$original" ]; then
+        die "unowned APK view at $target; leave it intact"
+    fi
     rm -f "$CB/boot" "$CB/active-path"
 }
 
@@ -63,34 +65,25 @@ case "${1:-status}" in
         active=$(active_base)
         [ -n "$active" ] && [ "$(printf '%s\n' "$active" | wc -l)" = 1 ] || die 'expected one active base APK'
         if same_boot "$CB/boot" && [ "$(cat "$CB/active-path")" = "$active" ]; then
-            owned "$SYSTEM_APK" /adb/opairshare/callback/system.apk || die 'system patch mount changed'
-            if [ "$active" != "$SYSTEM_APK" ]; then
-                owned "$active" /adb/opairshare/callback/active.apk || die 'active patch mount changed'
-            fi
+            owned "$active" /adb/opairshare/callback/active.apk || die 'patch mount changed'
             /system/bin/sh "$MODDIR/bin/app-check.sh" patched 7>&-
             exit 0
         fi
         /system/bin/sh "$MODDIR/bin/app-check.sh" original 7>&-
-        [ "$(digest "$SYSTEM_APK")" = "$original" ] || die 'system APK is not the supported original'
+        [ "$(digest "$active")" = "$original" ] || die 'active APK is not the supported original'
         idle
-        cp "$payload" "$CB/system.apk"
         cp "$payload" "$CB/active.apk"
-        chown 0:0 "$CB/system.apk" "$CB/active.apk"
-        chmod 0444 "$CB/system.apk" "$CB/active.apk"
-        chcon u:object_r:system_file:s0 "$CB/system.apk"
+        chown 0:0 "$CB/active.apk"
+        chmod 0444 "$CB/active.apk"
         chcon u:object_r:apk_data_file:s0 "$CB/active.apk"
         printf '%s\n' "$active" > "$CB/active-path"
         boot_id > "$CB/boot"
         trap 'rc=$?; trap - EXIT; if [ "$rc" != 0 ]; then restore_owned || true; fi; exit "$rc"' EXIT
-        if [ "$active" != "$SYSTEM_APK" ]; then
-            mount --bind "$CB/active.apk" "$active"
-            "$BB" mount -o remount,bind,ro "$CB/active.apk" "$active"
-        fi
-        mount --bind "$CB/system.apk" "$SYSTEM_APK"
-        "$BB" mount -o remount,bind,ro "$CB/system.apk" "$SYSTEM_APK"
+        mount --bind "$CB/active.apk" "$active"
+        "$BB" mount -o remount,bind,ro "$CB/active.apk" "$active"
         /system/bin/sh "$MODDIR/bin/app-check.sh" patched 7>&-
         trap - EXIT
-        echo 'CALLBACK_PATCH_READY stage69-discovery-r3'
+        echo 'CALLBACK_PATCH_READY r3'
         ;;
     restore|off)
         idle
@@ -102,8 +95,7 @@ case "${1:-status}" in
     status)
         echo "callback_enabled=$([ -e "$STATE/callback-off" ] && echo no || echo yes)"
         echo "callback_owned_this_boot=$(same_boot "$CB/boot" && echo yes || echo no)"
-        echo "callback_system_sha=$(digest "$SYSTEM_APK")"
-        echo "callback_active_path=$(active_base)"
+        echo "callback_active_path=$(active_base | head -n 1)"
         ;;
     *) die 'usage: callback.sh ensure|on|off|restore|status';;
 esac
