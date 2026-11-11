@@ -1,5 +1,13 @@
 # OPAirDrop for realme GT7 Pro (RMX5010) / kernel 6.6.89
 
+> ## ⚠️ 暂不可用（2026-11-11）
+>
+> 本移植版在 RMX5010 上可以安装、开机、换入驱动并启动 provider，但 **AWDL native 后端没有注册**
+> （桥接日志 `nativeRegistered=0`、`internal=true`），Mosey 退回内部发现，AWDL 会话从未建立，
+> **iPhone 与手机无法互相发现，AirDrop 实际不可用**。
+>
+> 详见 [`rmx5010/KNOWN-ISSUES.md`](rmx5010/KNOWN-ISSUES.md)。本仓库与 Release 中的安装包仅作实验记录保留。
+
 本仓库是 [Weverses/OPAirDrop](https://github.com/Weverses/OPAirDrop) **v1.0.31 的 RMX5010 移植版**。
 
 - **仓库根目录 = 可直接安装的模块内容**（去掉了 PJZ110 / SDK37 / 精确 6.6.118 内核 / 原厂模块大小 / 原厂 build-id 等门槛）。

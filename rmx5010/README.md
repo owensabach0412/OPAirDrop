@@ -2,8 +2,13 @@
 
 本目录是 OPAirDrop v1.0.31 在 **realme GT7 Pro（RMX5010）** 上的移植记录、去门槛补丁与真机验证日志。
 
-> 状态：**内核驱动链路已在真机验证通过**（provider → qca → mac80211 → wonder 全部加载，固件初始化成功，98 个 AWDL 参数可见，Wi-Fi 正常，已回滚原厂驱动）。
-> **用户态（Mosey / OShare 桥接）尚未验证**，安装模块并重启这一步还没做，原因见文末「已知缺口」。
+> 状态（2026-11-11）：**暂不可用**。
+>
+> - 内核驱动链路已在真机验证通过（provider → qca → mac80211 → wonder 全部加载，117 个驱动参数 / 98 个 AWDL 参数，Wi-Fi 正常）。
+> - LSPosed 桥接、Mosey provider、回调补丁、分享入口均已打通。
+> - 但 **AWDL native 后端没有注册**（`nativeRegistered=0`、`internal=true`），Mosey 走内部发现，AWDL 会话从未建立 → **iPhone 与手机互相发现不了**。
+>
+> 详细证据与复现方式见 [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md)。
 
 ---
 
@@ -180,3 +185,26 @@ AIRDROP_RESIDENT_READY_UI_GATED
 
 产物：`OPAirDrop-v1.0.31-RMX5010-r3.zip`，SHA256 `cdee18f6ab6833cb107e963e37cff4dc74cfd9b6dd3278d358e02fe4061fe425`。
 旧版（r2）快照见 `old/2026-11-11-r2/`。
+
+
+---
+
+## 9. 已知问题（2026-11-11 定案）：AWDL native 未注册
+
+**现象**：模块安装正常、驱动换入正常、provider 与桥接都起来了，但 iPhone 与 RMX5010 互相发现不了。
+
+**根因**：`mosey_server` 的 native AWDL 后端没有注册，Mosey 退回内部发现：
+
+```
+DISCOVERY_SHARED start internal=true nativeRegistered=0 nativeMode=0 bridgeWanted=1 targets=0
+opairshare_channel_state: accepting=0 vdev=255 freq=0
+/sys/class/ieee80211/wonder 存在，但没有 wonder0 netdev
+```
+
+**已排除**：内核四模块、vermagic/CRC、provider、Mosey 分包、LSPosed hooks、回调补丁、分享入口、权限。
+
+**推测**：`LD_PRELOAD` 的 `libopairshare_capability/config/channel` 是按 OnePlus 的 Mosey 构建适配的，在 realme 这版 Mosey 60715 上没有完成 native provider 注册。
+
+**结论**：需要改 native 适配层（或找到让 Mosey 走 native discovery 的路径），当前版本不可用于实际 AirDrop。
+
+完整记录：[`KNOWN-ISSUES.md`](KNOWN-ISSUES.md)、[`logs/awdl-not-registered.txt`](logs/awdl-not-registered.txt)。

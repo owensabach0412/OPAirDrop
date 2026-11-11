@@ -1,0 +1,84 @@
+# AWDL native 未注册 —— 定案日志摘录（2026-11-11）
+
+设备：RMX5010 / realme UI 16.0.5.700(CN01) / Android 16 (SDK 36)
+内核：6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k
+Mosey：1.0.980159239 (versionCode 60715, targetSdk 37)
+OPAirDrop：r3（去门槛 + 使用设备现有 Mosey + 只 patch active base）
+
+## 1. LSPosed 桥接日志（/data/adb/lspd/log/modules_*.log）
+
+```
+I/LSPosedFramework (com.google.android.mosey)[com.tlsu.oshareairdrop,...] oshare-receive-v1 module loaded in com.google.android.mosey
+I/LSPosedFramework (com.google.android.mosey)[...] installing hooks for com.google.android.mosey
+I/LSPosedFramework (com.google.android.mosey)[...] hooked Application.attach
+I/LSPosedFramework (com.google.android.mosey)[...] fixed149 discovery hook installed
+I/LSPosedFramework (com.google.android.mosey)[...] external provider enabled for bridge
+I/LSPosedFramework (com.google.android.mosey)[...] device metadata type hook installed
+I/LSPosedFramework (com.google.android.mosey)[...] hooked ExternalSharingService.a()
+I/LSPosedFramework (com.google.android.mosey)[...] hooked MoseyPermissionActivity
+I/LSPosedFramework (com.google.android.mosey)[...] Shared native/bridge discovery hooks installed
+I/LSPosedFramework (com.google.android.mosey)[...] AirDrop receive ownership hooks installed
+I/LSPosedFramework (com.google.android.mosey)[...] STARTUP stage=PROVIDER_READY elapsed_ms=494865
+I/LSPosedFramework (com.google.android.mosey)[...] STARTUP stage=CLIENT_ATTACHED elapsed_ms=495350
+I/LSPosedFramework (com.coloros.oshare)[...] STARTUP stage=RECEIVE_HOST_CONNECTED elapsed_ms=495351
+I/LSPosedFramework (com.google.android.mosey)[...] STARTUP stage=RECEIVE_CLIENT_ACK elapsed_ms=495358
+I/LSPosedFramework (com.google.android.mosey)[...] event=download_dir_set id=0 status=0 files=0 progress=NaN
+I/LSPosedFramework (com.google.android.mosey)[...] DISCOVERY_SHARED start internal=true nativeRegistered=0 nativeMode=0 bridgeWanted=1 targets=0
+I/LSPosedFramework (com.google.android.mosey)[...] event=discovery_started id=0 status=0 files=0 progress=NaN
+I/LSPosedFramework (com.google.android.mosey)[...] event=advertising_started id=0 status=0 files=0 progress=NaN
+I/LSPosedFramework (com.google.android.mosey)[...] STARTUP stage=RECEIVE_ADVERTISING elapsed_ms=495371
+```
+
+关键行：
+
+```
+DISCOVERY_SHARED start internal=true nativeRegistered=0 nativeMode=0 bridgeWanted=1 targets=0
+```
+
+## 2. 驱动会话状态
+
+```
+$ cat /sys/module/qca_cld3_peach_v2/parameters/opairshare_channel_state
+cookie=0 busy=0 fault=0 error=0 accepting=0 vdev=255 freq=0
+
+$ cat /sys/module/qca_cld3_peach_v2/parameters/opairshare_awdl_rx_mac_filter
+used=0 armed=0 pending=0 active=0 fault=0 clear_submitted=0 vdev=255 freq=0 reply=-1 error=0 delete_ack=0 generation=0
+
+$ cat /sys/module/qca_cld3_peach_v2/parameters/opairshare_bridge_pending
+0
+```
+
+## 3. 网卡与 wiphy
+
+```
+$ ls /sys/class/ieee80211
+phy1
+wonder
+
+$ ip -o link | grep -E 'wonder|mosey'
+（无输出）
+```
+
+`wonder` wiphy 已注册，但 `wonder0` vif 从未创建。
+
+## 4. 模块状态（同日）
+
+```
+model=RMX5010 sdk=36 kernel=6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k
+stack=stage44_coexist_owned
+Service com.google.android.moseyservice.IMoseyService/default: found
+provider_active=yes
+foreground_delegate=yes
+callback_enabled=yes
+callback_owned_this_boot=yes
+callback_active_path=/data/app/.../com.google.android.mosey-.../base.apk
+supervisor_pid=...
+Wifi is enabled / connected
+```
+
+## 5. 实测
+
+- iPhone 打开 AirDrop（所有人）→ 列表里没有 RMX5010；
+- 手机打开“与 iPhone 互传”（`com.coloros.oshare/.ui.IOSShareActivity`，显示“正在搜索附近设备…”）→ 列表里没有 iPhone。
+
+结论：AWDL 会话未建立，双方无法互相发现。
